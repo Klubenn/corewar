@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/student/corewar/libft/libft.h
+string.h
+-
+stdlib.h
+-
+unistd.h
+-
+sys/types.h
+-
+sys/uio.h
+-
+
+/Users/student/corewar/to_bytecode.c
+fcntl.h
+-
+stdio.h
+-
+libft/libft.h
+/Users/student/corewar/libft/libft.h
+
