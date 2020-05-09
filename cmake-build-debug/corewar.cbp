@@ -82,6 +82,18 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/student/corewar/asm.h">
+			<Option target="corewar"/>
+		</Unit>
+		<Unit filename="/Users/student/corewar/champ_exec_code.c">
+			<Option target="corewar"/>
+		</Unit>
+		<Unit filename="/Users/student/corewar/op.h">
+			<Option target="corewar"/>
+		</Unit>
+		<Unit filename="/Users/student/corewar/print_file.c">
+			<Option target="corewar"/>
+		</Unit>
 		<Unit filename="/Users/student/corewar/to_bytecode.c">
 			<Option target="corewar"/>
 		</Unit>

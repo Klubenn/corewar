@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/corewar.dir/champ_exec_code.c.o"
+  "CMakeFiles/corewar.dir/print_file.c.o"
   "CMakeFiles/corewar.dir/to_bytecode.c.o"
   "corewar"
   "corewar.pdb"

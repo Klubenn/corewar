@@ -11,7 +11,33 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1b15eac9-3a32-49f9-9742-8af87cbc1fd6" name="Default Changelist" comment="" />
+    <list default="true" id="1b15eac9-3a32-49f9-9742-8af87cbc1fd6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/corewar.dir/C.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/corewar.dir/C.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/corewar.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/corewar.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/corewar.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/corewar.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/corewar.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/corewar.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/corewar.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/corewar.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/corewar.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/corewar.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/corewar.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/corewar.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/corewar.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/corewar.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/corewar.dir/to_bytecode.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/corewar.dir/to_bytecode.c.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/corewar" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/corewar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/corewar.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/corewar.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libft/ft_memalloc.c" beforeDir="false" afterPath="$PROJECT_DIR$/libft/ft_memalloc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libft/ft_memalloc.o" beforeDir="false" afterPath="$PROJECT_DIR$/libft/ft_memalloc.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libft/libft.a" beforeDir="false" afterPath="$PROJECT_DIR$/libft/libft.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/op.h" beforeDir="false" afterPath="$PROJECT_DIR$/op.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.cor" beforeDir="false" afterPath="$PROJECT_DIR$/test.cor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/to_bytecode.c" beforeDir="false" afterPath="$PROJECT_DIR$/to_bytecode.c" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,7 +48,7 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1bWgGt2gJ8SsSgbfwX4EFFNqiHo" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -42,7 +68,7 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="corewar" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="test" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="corewar" TARGET_NAME="corewar" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="corewar" RUN_TARGET_NAME="corewar">
+    <configuration name="corewar" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="test.s" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="corewar" TARGET_NAME="corewar" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="corewar" RUN_TARGET_NAME="corewar">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -59,6 +85,8 @@
       <option name="presentableId" value="Default" />
       <updated>1588753170731</updated>
       <workItem from="1588753173684" duration="3175000" />
+      <workItem from="1588873417388" duration="16774000" />
+      <workItem from="1589044815252" duration="1476000" />
     </task>
     <servers />
   </component>
@@ -66,29 +94,56 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="0" y="195" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588791276341">
+    <state x="0" y="195" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588875181470">
       <screen x="0" y="23" width="1920" height="977" />
     </state>
-    <state x="0" y="195" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.977@0.23.1920.977" timestamp="1588791276341" />
-    <state x="279" y="310" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1588778812490">
+    <state x="0" y="195" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.977@0.23.1920.977" timestamp="1588875181470" />
+    <state x="279" y="310" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1588874631782">
       <screen x="0" y="23" width="1920" height="977" />
     </state>
-    <state x="279" y="310" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1920.977@0.23.1920.977" timestamp="1588778812490" />
-    <state width="1100" height="248" key="GridCell.Tab.0.bottom" timestamp="1588791422844">
+    <state x="279" y="310" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1920.977@0.23.1920.977" timestamp="1588874631782" />
+    <state width="1100" height="248" key="GridCell.Tab.0.bottom" timestamp="1589045702590">
       <screen x="0" y="23" width="1920" height="977" />
     </state>
-    <state width="1100" height="248" key="GridCell.Tab.0.bottom/0.23.1920.977@0.23.1920.977" timestamp="1588791422844" />
-    <state width="1100" height="248" key="GridCell.Tab.0.center" timestamp="1588791422841">
+    <state width="1100" height="248" key="GridCell.Tab.0.bottom/0.23.1920.977@0.23.1920.977" timestamp="1589045702590" />
+    <state width="1100" height="248" key="GridCell.Tab.0.center" timestamp="1589045702588">
       <screen x="0" y="23" width="1920" height="977" />
     </state>
-    <state width="1100" height="248" key="GridCell.Tab.0.center/0.23.1920.977@0.23.1920.977" timestamp="1588791422841" />
-    <state width="1100" height="248" key="GridCell.Tab.0.left" timestamp="1588791422840">
+    <state width="1100" height="248" key="GridCell.Tab.0.center/0.23.1920.977@0.23.1920.977" timestamp="1589045702588" />
+    <state width="1100" height="248" key="GridCell.Tab.0.left" timestamp="1589045702587">
       <screen x="0" y="23" width="1920" height="977" />
     </state>
-    <state width="1100" height="248" key="GridCell.Tab.0.left/0.23.1920.977@0.23.1920.977" timestamp="1588791422840" />
-    <state width="1100" height="248" key="GridCell.Tab.0.right" timestamp="1588791422842">
+    <state width="1100" height="248" key="GridCell.Tab.0.left/0.23.1920.977@0.23.1920.977" timestamp="1589045702587" />
+    <state width="1100" height="248" key="GridCell.Tab.0.right" timestamp="1589045702589">
       <screen x="0" y="23" width="1920" height="977" />
     </state>
-    <state width="1100" height="248" key="GridCell.Tab.0.right/0.23.1920.977@0.23.1920.977" timestamp="1588791422842" />
+    <state width="1100" height="248" key="GridCell.Tab.0.right/0.23.1920.977@0.23.1920.977" timestamp="1589045702589" />
+    <state width="1100" height="307" key="GridCell.Tab.1.bottom" timestamp="1588876950401">
+      <screen x="0" y="23" width="1920" height="977" />
+    </state>
+    <state width="1100" height="307" key="GridCell.Tab.1.bottom/0.23.1920.977@0.23.1920.977" timestamp="1588876950401" />
+    <state width="1100" height="307" key="GridCell.Tab.1.center" timestamp="1588876950399">
+      <screen x="0" y="23" width="1920" height="977" />
+    </state>
+    <state width="1100" height="307" key="GridCell.Tab.1.center/0.23.1920.977@0.23.1920.977" timestamp="1588876950399" />
+    <state width="1100" height="307" key="GridCell.Tab.1.left" timestamp="1588876950398">
+      <screen x="0" y="23" width="1920" height="977" />
+    </state>
+    <state width="1100" height="307" key="GridCell.Tab.1.left/0.23.1920.977@0.23.1920.977" timestamp="1588876950398" />
+    <state width="1100" height="307" key="GridCell.Tab.1.right" timestamp="1588876950400">
+      <screen x="0" y="23" width="1920" height="977" />
+    </state>
+    <state width="1100" height="307" key="GridCell.Tab.1.right/0.23.1920.977@0.23.1920.977" timestamp="1588876950400" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/champ_exec_code.c</url>
+          <line>20</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -123,6 +123,60 @@ corewar/fast:
 	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/build
 .PHONY : corewar/fast
 
+champ_exec_code.o: champ_exec_code.c.o
+
+.PHONY : champ_exec_code.o
+
+# target to build an object file
+champ_exec_code.c.o:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/champ_exec_code.c.o
+.PHONY : champ_exec_code.c.o
+
+champ_exec_code.i: champ_exec_code.c.i
+
+.PHONY : champ_exec_code.i
+
+# target to preprocess a source file
+champ_exec_code.c.i:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/champ_exec_code.c.i
+.PHONY : champ_exec_code.c.i
+
+champ_exec_code.s: champ_exec_code.c.s
+
+.PHONY : champ_exec_code.s
+
+# target to generate assembly for a file
+champ_exec_code.c.s:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/champ_exec_code.c.s
+.PHONY : champ_exec_code.c.s
+
+print_file.o: print_file.c.o
+
+.PHONY : print_file.o
+
+# target to build an object file
+print_file.c.o:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/print_file.c.o
+.PHONY : print_file.c.o
+
+print_file.i: print_file.c.i
+
+.PHONY : print_file.i
+
+# target to preprocess a source file
+print_file.c.i:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/print_file.c.i
+.PHONY : print_file.c.i
+
+print_file.s: print_file.c.s
+
+.PHONY : print_file.s
+
+# target to generate assembly for a file
+print_file.c.s:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/print_file.c.s
+.PHONY : print_file.c.s
+
 to_bytecode.o: to_bytecode.c.o
 
 .PHONY : to_bytecode.o
@@ -159,6 +213,12 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... corewar"
+	@echo "... champ_exec_code.o"
+	@echo "... champ_exec_code.i"
+	@echo "... champ_exec_code.s"
+	@echo "... print_file.o"
+	@echo "... print_file.i"
+	@echo "... print_file.s"
 	@echo "... to_bytecode.o"
 	@echo "... to_bytecode.i"
 	@echo "... to_bytecode.s"
