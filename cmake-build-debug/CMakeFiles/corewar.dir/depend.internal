@@ -11,6 +11,11 @@ CMakeFiles/corewar.dir/print_file.c.o
  /Users/student/corewar/libft/libft.h
  /Users/student/corewar/op.h
  /Users/student/corewar/print_file.c
+CMakeFiles/corewar.dir/sample_t_struct.c.o
+ /Users/student/corewar/asm.h
+ /Users/student/corewar/libft/libft.h
+ /Users/student/corewar/op.h
+ /Users/student/corewar/sample_t_struct.c
 CMakeFiles/corewar.dir/to_bytecode.c.o
  /Users/student/corewar/asm.h
  /Users/student/corewar/libft/libft.h

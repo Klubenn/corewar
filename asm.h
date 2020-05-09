@@ -44,6 +44,7 @@ typedef struct		s_struct
 
 }					t_struct;
 
+t_struct *temp_data(char *name, char *comment); //temporary function. should be removed after 1st part is ready
 void	print_file(char *new_file);
 void	bin_exec_champ(int fd, t_struct *data);
 

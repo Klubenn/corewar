@@ -94,6 +94,9 @@
 		<Unit filename="/Users/student/corewar/print_file.c">
 			<Option target="corewar"/>
 		</Unit>
+		<Unit filename="/Users/student/corewar/sample_t_struct.c">
+			<Option target="corewar"/>
+		</Unit>
 		<Unit filename="/Users/student/corewar/to_bytecode.c">
 			<Option target="corewar"/>
 		</Unit>

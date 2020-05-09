@@ -8,11 +8,12 @@ void	argument_type(int fd, t_instruction *instruction)
 
 	arg_type = 0;
 	i = 1;
-	while (i < instruction->num_of_args)
+	while (i <= instruction->num_of_args)
 	{
 		arg_num[i] = instruction->args_of_func[i].type;
 		arg_num[i] = arg_num[i] << ((4 - i) * 2);
 		arg_type = arg_type | arg_num[i];
+		i++;
 	}
 	write(fd, &arg_type, 1);
 }
@@ -29,11 +30,11 @@ void	operation_code(int fd, t_instruction *instruction)
 
 void	bin_exec_champ(int fd, t_struct *data)
 {
-	while (data->commands)
-	{
+//	while (data->commands)
+//	{
 		operation_code(fd, data->commands->instruction);
 /*		arguments(fd, data->commands->instruction);
 		data->commands = data->commands->next;
-*/	}
-
+	}
+*/
 }

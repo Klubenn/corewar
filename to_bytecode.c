@@ -55,12 +55,12 @@ void    to_bytecode(char *new_file, t_struct *data)
 	int fd;
 
 	fd = open(new_file, O_WRONLY | O_APPEND | O_TRUNC | O_CREAT, 0644);
-	bin_sign(fd);
-    bin_champ_name(fd, data);
-    bin_null(fd);
-    bin_exec_code_size(fd, data);
-    bin_comment(fd, data);
-    bin_null(fd);
+//	bin_sign(fd);
+//    bin_champ_name(fd, data);
+//    bin_null(fd);
+//    bin_exec_code_size(fd, data);
+//    bin_comment(fd, data);
+//    bin_null(fd);
     bin_exec_champ(fd, data);
 	close(fd);
 }
@@ -92,25 +92,12 @@ char *change_extension(char *file_name)
 	return (NULL);
 }
 
-
-t_struct *temp_data(char *name, char *comment)
-{
-	t_struct *data;
-
-	data = (t_struct *)ft_memalloc(sizeof(t_struct));
-	if (!data)
-		return (NULL);
-	data->comment = comment;
-	data->name = name;
-	return (data);
-}
-
 int main(int ac, char **av)
 {
 	char *new_file;
 	t_struct *data;
 
-	data =  temp_data("COVID-19", "This city is mine");//this should come from Kate
+	data = temp_data("COVID-19", "This city is mine");//this should come from Kate
 	if (ac != 2)
 	{
 		printf("usage: ./asm champion_file.s");
@@ -122,6 +109,6 @@ int main(int ac, char **av)
 		return (1);
 	}
 	to_bytecode(new_file, data); //create a file with a bytecode
-//	print_file(new_file); //print the contents of the generated file in hex format
+	print_file(new_file); //print the contents of the generated file in hex format
 	return (0);
 }

@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_C
   "/Users/student/corewar/champ_exec_code.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/champ_exec_code.c.o"
   "/Users/student/corewar/print_file.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/print_file.c.o"
+  "/Users/student/corewar/sample_t_struct.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/sample_t_struct.c.o"
   "/Users/student/corewar/to_bytecode.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/to_bytecode.c.o"
   )
 set(CMAKE_C_COMPILER_ID "AppleClang")

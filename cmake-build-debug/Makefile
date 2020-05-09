@@ -177,6 +177,33 @@ print_file.c.s:
 	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/print_file.c.s
 .PHONY : print_file.c.s
 
+sample_t_struct.o: sample_t_struct.c.o
+
+.PHONY : sample_t_struct.o
+
+# target to build an object file
+sample_t_struct.c.o:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/sample_t_struct.c.o
+.PHONY : sample_t_struct.c.o
+
+sample_t_struct.i: sample_t_struct.c.i
+
+.PHONY : sample_t_struct.i
+
+# target to preprocess a source file
+sample_t_struct.c.i:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/sample_t_struct.c.i
+.PHONY : sample_t_struct.c.i
+
+sample_t_struct.s: sample_t_struct.c.s
+
+.PHONY : sample_t_struct.s
+
+# target to generate assembly for a file
+sample_t_struct.c.s:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/sample_t_struct.c.s
+.PHONY : sample_t_struct.c.s
+
 to_bytecode.o: to_bytecode.c.o
 
 .PHONY : to_bytecode.o
@@ -219,6 +246,9 @@ help:
 	@echo "... print_file.o"
 	@echo "... print_file.i"
 	@echo "... print_file.s"
+	@echo "... sample_t_struct.o"
+	@echo "... sample_t_struct.i"
+	@echo "... sample_t_struct.s"
 	@echo "... to_bytecode.o"
 	@echo "... to_bytecode.i"
 	@echo "... to_bytecode.s"
