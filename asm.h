@@ -7,11 +7,15 @@
 #include <zconf.h>
 #include "op.h"
 
-typedef struct		s_strings t_strings;
-typedef struct		s_labels
+typedef struct		s_label t_label;
+typedef struct		s_instruction t_instruction;
+
+struct				s_label
 {
 	char			*label_name;
-}					t_labels;
+	t_instruction	*instruction;
+	t_label			*next;
+};
 
 typedef struct		s_args
 {
@@ -19,29 +23,23 @@ typedef struct		s_args
 	char			*str;
 }					t_args;
 
-typedef struct		s_instruction
+struct 				s_instruction
 {
+	int 			position;
 	int				function;// from 0 to 16
 	int				num_of_args;
 	t_args			args_of_func[4];
-
-}					t_instruction;
-
-
-struct				s_strings
-{
-	t_labels		*labels;
-	t_instruction	*instruction;
-	t_strings		*next;
-	t_strings		*prev;
+	t_instruction	*next;
 };
 
 typedef struct		s_struct
 {
+	char			*file_name;
 	char			*name;
 	char			*comment;
-	t_strings		*commands;
-
+	int 			code_length;
+	t_instruction	*instruction;
+	t_label			*label;
 }					t_struct;
 
 t_struct *temp_data(char *name, char *comment); //temporary function. should be removed after 1st part is ready

@@ -27,11 +27,22 @@
 #define ARG_2 		T_DIR
 #define ARG_3 		T_DIR
 
+t_label *temp_label()
+{
+	t_label *label;
+
+	if (!(label = (t_label *)ft_memalloc(sizeof(t_label))))
+		return (NULL);
+
+	return (label);
+}
+
 t_instruction *temp_instruction()
 {
 	t_instruction *instruction;
 
-	instruction = (t_instruction *)ft_memalloc(sizeof(t_instruction));
+	if (!(instruction = (t_instruction *)ft_memalloc(sizeof(t_instruction))))
+		return (NULL);
 	instruction->num_of_args = ARGNUM;
 	instruction->function = OPERATION;
 	if (ARGNUM >= 1)
@@ -43,15 +54,6 @@ t_instruction *temp_instruction()
 	return (instruction);
 }
 
-t_strings *temp_commands()
-{
-	t_strings *commands;
-
-	commands = (t_strings *)ft_memalloc(sizeof(t_strings));
-	commands->instruction = temp_instruction();
-	return (commands);
-}
-
 t_struct *temp_data(char *name, char *comment)
 {
 	t_struct *data;
@@ -61,6 +63,7 @@ t_struct *temp_data(char *name, char *comment)
 		return (NULL);
 	data->comment = comment;
 	data->name = name;
-	data->commands = temp_commands();
+	data->instruction = temp_instruction();
+	data->label = temp_label();
 	return (data);
 }

@@ -55,13 +55,13 @@ void    to_bytecode(char *new_file, t_struct *data)
 	int fd;
 
 	fd = open(new_file, O_WRONLY | O_APPEND | O_TRUNC | O_CREAT, 0644);
-//	bin_sign(fd);
-//    bin_champ_name(fd, data);
-//    bin_null(fd);
-//    bin_exec_code_size(fd, data);
-//    bin_comment(fd, data);
-//    bin_null(fd);
-    bin_exec_champ(fd, data);
+	bin_sign(fd);
+	bin_champ_name(fd, data);
+	bin_null(fd);
+	bin_exec_code_size(fd, data);
+	bin_comment(fd, data);
+	bin_null(fd);
+	bin_exec_champ(fd, data);
 	close(fd);
 }
 
@@ -92,18 +92,36 @@ char *change_extension(char *file_name)
 	return (NULL);
 }
 
+void	instructions_position(t_struct *data)
+{
+	t_instruction *instruction;
+	int position;
+
+	position = 0;
+	instruction = data->instruction;
+	while(instruction)
+	{
+		instruction->position = position;
+		// here there will be calculated the length of each instruction and the sum of previous
+		// lengths will become a position for each instruction which will make it easy to use
+		// labels. Also this calculations will result in total exec champ code length
+		instruction = instruction->next;
+	}
+}
+
 int main(int ac, char **av)
 {
 	char *new_file;
 	t_struct *data;
 
 	data = temp_data("COVID-19", "This city is mine");//this should come from Kate
+	instructions_position(data);
 	if (ac != 2)
 	{
 		printf("usage: ./asm champion_file.s");
 		return (0);
 	}
-	if (!(new_file = change_extension(av[1]))) //prepare a .cor ending name
+	if (!(new_file = change_extension(data->file_name))) //prepare a .cor ending name
 	{
 		write(2, "Wrong file name. Should have an \".s\" extension\n", 47);
 		return (1);

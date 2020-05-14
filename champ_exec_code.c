@@ -28,13 +28,18 @@ void	operation_code(int fd, t_instruction *instruction)
 		argument_type(fd, instruction);
 }
 
+t_instruction	*arguments(int fd, t_struct *data, t_instruction *instruction)
+{
+
+	return (instruction);
+}
+
 void	bin_exec_champ(int fd, t_struct *data)
 {
-//	while (data->commands)
-//	{
-		operation_code(fd, data->commands->instruction);
-/*		arguments(fd, data->commands->instruction);
-		data->commands = data->commands->next;
+	while (data->instruction)
+	{
+		operation_code(fd, data->instruction);
+		data->instruction = arguments(fd, data, data->instruction);
 	}
-*/
+
 }
