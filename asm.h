@@ -10,6 +10,15 @@
 typedef struct		s_label t_label;
 typedef struct		s_instruction t_instruction;
 
+typedef	struct		s_op
+{
+	int 			func_num;
+	int 			arg_num;
+	unsigned char	arg[3];
+	int 			arg_type_code;
+	int 			t_dir_size;
+}					t_op;
+
 struct				s_label
 {
 	char			*label_name;

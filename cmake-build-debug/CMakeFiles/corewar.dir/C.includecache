@@ -18,6 +18,10 @@ zconf.h
 op.h
 /Users/student/corewar/op.h
 
+/Users/student/corewar/champ_exec_code.c
+asm.h
+/Users/student/corewar/asm.h
+
 /Users/student/corewar/libft/libft.h
 string.h
 -
@@ -32,7 +36,15 @@ sys/uio.h
 
 /Users/student/corewar/op.h
 
+/Users/student/corewar/print_file.c
+asm.h
+/Users/student/corewar/asm.h
+
 /Users/student/corewar/sample_t_struct.c
+asm.h
+/Users/student/corewar/asm.h
+
+/Users/student/corewar/to_bytecode.c
 asm.h
 /Users/student/corewar/asm.h
 

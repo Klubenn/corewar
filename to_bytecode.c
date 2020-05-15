@@ -61,7 +61,7 @@ void    to_bytecode(char *new_file, t_struct *data)
 	bin_exec_code_size(fd, data);
 	bin_comment(fd, data);
 	bin_null(fd);
-	bin_exec_champ(fd, data);
+//	bin_exec_champ(fd, data);
 	close(fd);
 }
 
@@ -92,6 +92,50 @@ char *change_extension(char *file_name)
 	return (NULL);
 }
 
+t_op	op_calc(int num)
+{
+	t_op    op_tab[17] =
+			{
+					{0, 0, {0}, 0, 4},
+					{1, 1, {T_DIR}, 0, 4},
+					{2, 2, {T_DIR | T_IND, T_REG}, 1, 4},
+					{3, 2, {T_REG, T_IND | T_REG}, 1, 4},
+					{4, 3, {T_REG, T_REG, T_REG}, 1, 4},
+					{5, 3, {T_REG, T_REG, T_REG}, 1, 4},
+					{6, 3, {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG}, 1, 4},
+					{7, 3, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, 1, 4},
+					{8, 3, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, 1, 4},
+					{9, 1, {T_DIR}, 0, 2},
+					{10, 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, 1, 2},
+					{11, 3, {T_REG, T_REG | T_DIR | T_IND, T_DIR | T_REG}, 1, 2},
+					{12, 1, {T_DIR}, 0, 2},
+					{13, 2, {T_DIR | T_IND, T_REG}, 1, 4},
+					{14, 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, 1, 2},
+					{15, 1, {T_DIR}, 0, 2},
+					{16, 1, {T_REG}, 1, 4}
+			};
+	return (op_tab[num]);
+}
+
+int		argument_size(t_instruction *instruction)
+{
+	t_op	op_data;
+	int 	num;
+	int 	size;
+
+	size = 0;
+	op_data = op_calc(instruction->function);
+	num = op_data.arg_num;
+	while (num-- > 0)
+	{
+		size += instruction->args_of_func[num].type == T_DIR ? op_data.t_dir_size : 0;
+		size += instruction->args_of_func[num].type == T_IND ? 2 : 0;
+		size += instruction->args_of_func[num].type == T_REG ? 1 : 0;
+	}
+	size += op_data.arg_type_code + 1;
+	return (size);
+}
+
 void	instructions_position(t_struct *data)
 {
 	t_instruction *instruction;
@@ -102,11 +146,10 @@ void	instructions_position(t_struct *data)
 	while(instruction)
 	{
 		instruction->position = position;
-		// here there will be calculated the length of each instruction and the sum of previous
-		// lengths will become a position for each instruction which will make it easy to use
-		// labels. Also this calculations will result in total exec champ code length
+		position += argument_size(instruction);
 		instruction = instruction->next;
 	}
+	data->code_length = position;
 }
 
 int main(int ac, char **av)
@@ -115,18 +158,13 @@ int main(int ac, char **av)
 	t_struct *data;
 
 	data = temp_data("COVID-19", "This city is mine");//this should come from Kate
-	instructions_position(data);
-	if (ac != 2)
-	{
-		printf("usage: ./asm champion_file.s");
-		return (0);
-	}
+	instructions_position(data);//calculate size of instructions and total code size
 	if (!(new_file = change_extension(data->file_name))) //prepare a .cor ending name
 	{
 		write(2, "Wrong file name. Should have an \".s\" extension\n", 47);
 		return (1);
 	}
 	to_bytecode(new_file, data); //create a file with a bytecode
-	print_file(new_file); //print the contents of the generated file in hex format
+//	print_file(new_file); //print the contents of the generated file in hex format
 	return (0);
 }

@@ -61,6 +61,7 @@ t_struct *temp_data(char *name, char *comment)
 	data = (t_struct *)ft_memalloc(sizeof(t_struct));
 	if (!data)
 		return (NULL);
+	data->file_name = ft_strdup("test.s");
 	data->comment = comment;
 	data->name = name;
 	data->instruction = temp_instruction();
