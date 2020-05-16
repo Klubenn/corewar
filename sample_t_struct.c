@@ -68,3 +68,4 @@ t_struct *temp_data(char *name, char *comment)
 	data->label = temp_label();
 	return (data);
 }
+

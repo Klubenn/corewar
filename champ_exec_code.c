@@ -28,10 +28,35 @@ void	operation_code(int fd, t_instruction *instruction)
 		argument_type(fd, instruction);
 }
 
-t_instruction	*arguments(int fd, t_struct *data, t_instruction *instruction)
+void	f_reg(int fd, t_struct *data, char *str)
+{
+	unsigned char reg_num;
+
+	reg_num = (unsigned char)ft_atoi(str);//if str contains "r", then ft_atoi(str+1)
+	if (reg_num > 0  && reg_num <= 16)
+		write(fd, &reg_num, 1);
+}
+
+void	f_dir(int fd, t_struct *data, char *str)
 {
 
-	return (instruction);
+}
+
+void	f_ind(int fd,t_struct *data, char *str)
+{
+
+}
+
+void arguments_code(int fd, t_struct *data, t_instruction *instruction)
+{
+	int i;
+	f func[4] = {NULL, &f_reg, &f_dir, &f_ind};
+
+	i = 0;
+	while (i++ <= instruction->num_of_args)
+		func[instruction->args_of_func[i].type](fd, data, instruction->args_of_func[i].str);
+
+
 }
 
 void	bin_exec_champ(int fd, t_struct *data)
@@ -39,7 +64,7 @@ void	bin_exec_champ(int fd, t_struct *data)
 	while (data->instruction)
 	{
 		operation_code(fd, data->instruction);
-		data->instruction = arguments(fd, data, data->instruction);
+		arguments_code(fd, data, data->instruction);
 	}
 
 }

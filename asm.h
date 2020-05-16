@@ -10,6 +10,7 @@
 typedef struct		s_label t_label;
 typedef struct		s_instruction t_instruction;
 
+
 typedef	struct		s_op
 {
 	int 			func_num;
@@ -29,6 +30,7 @@ struct				s_label
 typedef struct		s_args
 {
 	unsigned char	type;//from 0 to 3 : NULL, T_REG, T_DIR or T_IND
+	int 			size;
 	char			*str;
 }					t_args;
 
@@ -50,6 +52,8 @@ typedef struct		s_struct
 	t_instruction	*instruction;
 	t_label			*label;
 }					t_struct;
+
+typedef void (*f)(int, t_struct *, char *);
 
 t_struct *temp_data(char *name, char *comment); //temporary function. should be removed after 1st part is ready
 void	print_file(char *new_file);
