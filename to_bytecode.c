@@ -156,19 +156,41 @@ void	instructions_position(t_struct *data)
 	data->code_length = position;
 }
 
+void	check_labels(t_struct *data)
+{
+	t_label *label_1;
+	t_label *label_2;
+	char	*name;
+
+	label_1 = data->label;
+	while (label_1)
+	{
+		name = label_1->label_name;
+		label_2 = label_1->next;
+		while (label_2)
+		{
+			if (ft_strcmp(name, label_2->label_name) == 0)
+				exit (1);//invoke error function
+			label_2 = label_2->next;
+		}
+		label_1 = label_1->next;
+	}
+}
+
 int main(int ac, char **av)
 {
 	char *new_file;
 	t_struct *data;
 
 	data = temp_data("COVID-19", "This city is mine");//this should come from Kate
-	instructions_position(data);//calculate size of instructions and total code size
-	if (!(new_file = change_extension(data->file_name))) //prepare a .cor ending name
+	instructions_position(data);//check that code length isn't exceeded
+	check_labels(data);
+	if (!(new_file = change_extension(data->file_name)))
 	{
 		write(2, "Wrong file name. Should have an \".s\" extension\n", 47);
 		return (1);
 	}
-	to_bytecode(new_file, data); //create a file with a bytecode
-//	print_file(new_file); //print the contents of the generated file in hex format
+	to_bytecode(new_file, data);
+//	print_file(new_file); //print the contents of the generated file in hex format. remove later
 	return (0);
 }

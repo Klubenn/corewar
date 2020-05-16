@@ -53,10 +53,12 @@ typedef struct		s_struct
 	t_label			*label;
 }					t_struct;
 
-typedef void (*f)(int, t_struct *, char *);
+typedef void (*t_f)(int fd, t_struct *data, t_instruction *instruction, t_args argument);
 
 t_struct *temp_data(char *name, char *comment); //temporary function. should be removed after 1st part is ready
 void	print_file(char *new_file);
 void	bin_exec_champ(int fd, t_struct *data);
+void	write_backwards(int fd, void *source, int size);
+
 
 #endif //COREWAR_ASM_H
