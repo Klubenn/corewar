@@ -67,7 +67,7 @@ void	f_ind(int fd,t_struct *data, t_instruction *instruction, t_args argument)
 	if (argument.str[0] == ':')
 	{
 		ind_num += (short)find_label(data, argument.str + 1);
-		write_backwards(fd, ind_num, sizeof(short));//check if it should be written backwords or not
+		write_backwards(fd, ind_num, sizeof(short));//check if it should be written backwards or not
 	}
 	else
 	{

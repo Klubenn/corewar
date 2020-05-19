@@ -12,11 +12,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b15eac9-3a32-49f9-9742-8af87cbc1fd6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.1.h.swp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asm.h" beforeDir="false" afterPath="$PROJECT_DIR$/asm.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1.h" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/champ_exec_code.c" beforeDir="false" afterPath="$PROJECT_DIR$/champ_exec_code.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/corewar" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/corewar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/to_bytecode.c" beforeDir="false" afterPath="$PROJECT_DIR$/to_bytecode.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +68,7 @@
       <workItem from="1588753173684" duration="3175000" />
       <workItem from="1588873417388" duration="16774000" />
       <workItem from="1589044815252" duration="13842000" />
-      <workItem from="1589539037047" duration="30937000" />
+      <workItem from="1589539037047" duration="32351000" />
     </task>
     <servers />
   </component>
