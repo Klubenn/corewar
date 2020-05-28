@@ -3,6 +3,7 @@
 
 #include <fcntl.h>
 #include <stdio.h>
+#include <limits.h>
 #include "libft/libft.h"
 #include <zconf.h>
 #include "op.h"
