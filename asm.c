@@ -1,220 +1,229 @@
+//
+// Created by Somebody on 11.06.2020.
+//
+
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   asm.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: etuffleb <etuffleb@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/28 18:07:51 by etuffleb          #+#    #+#             */
-/*   Updated: 2020/03/15 20:57:39 by etuffleb         ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   asm.c											  :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: etuffleb <etuffleb@student.42.fr>		  +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2019/11/28 18:07:51 by etuffleb		  #+#	#+#			 */
+/*   Updated: 2020/03/15 20:57:39 by etuffleb		 ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
+#include <stdio.h>
+#include <libft.h>
 #include "op.h"
 #include "asm.h"
 
-
-#define COMMENT_CHAR		'#'
-#define ALT_COMMENT_CHAR	';'
-
-#define LABEL_CHAR			':'
-#define DIRECT_CHAR			'%'
-#define SEPARATOR_CHAR		','
-
-#define LABEL_CHARS			"abcdefghijklmnopqrstuvwxyz_0123456789"
-
-#define NAME_CMD_STRING		".name"
-#define COMMENT_CMD_STRING	".comment"
-
-#define PROG_NAME_LENGTH		(128)
-#define COMMENT_LENGTH			(2048)
-#define COREWAR_EXEC_MAGIC		0xea83f3
-
-
-typedef struct		s_labels
+void	free_data(t_struct *data)
 {
-	char			*label_name;
-}					t_labels;
+	free(data);//TODO write more later
+}
 
-
-typedef struct		s_args
+void	error_management(char *str, t_struct *data, int exiting)
 {
-	int				type;//from 0 to 3 : NULL, T_REG, T_DIR or T_IND
-	char			*str;
-}					t_args;
+	int error;
 
+	error = 0;
+	if (str)
+	{
+		ft_putstr_fd(str, 2);
+		error = 1;
+	}
+	if (data)
+		free_data(data);
+	if (exiting)
+		exit(error);
+}
 
-typedef struct		s_instruction
-{
-	int				function;// from 0 to 16
-	int				num_of_args;
-	t_args			args_of_func[num_of_args];
-
-}					t_instruction;
-
-
-typedef struct		s_strings
-{
-	t_labels		*labels;
-	t_instruction	instruction;
-}					t_strings;
-
-
-typedef struct		s_struct
-{
-	char			*name;
-	char			*comment;
-	t_strings		*commands;
-
-}					t_struct;
-
-
-int		check_length(char *str, int is_name)
+int		check_length(char *str, int is_name)//TODO можно при ошибке возвращать 0 или отрицательное значение, а если всё верно, позицию начала имени/комментария
 {
 	char *substring;
-	int i = 0;
-	int strlen;
+	int i;
+	int len;
 
+	i = 0;
 	if (is_name)
 		substring = ft_substr(str, 6);
 	else
 		substring = ft_substr(str, 9);
 	while (substring[i] == ' ')
 		i++;
-	strlen = ft_strlen(&(substring[i])) - 1;//;
-	if ((is_name && strlen > PROG_NAME_LENGTH) ||
-		(!is_name && strlen > COMMENT_LENGTH) ||
-		(strlen < 1))
+	len = ft_strlen(&(substring[i])) - 1;//;
+	if ((is_name && len > PROG_NAME_LENGTH) ||
+		(!is_name && len > COMMENT_LENGTH) ||
+		(len < 1))
 		return 0;
 	else
 		return 1;
 }
 
-void	set_name_or_comment(char *str, int is_name, t_struct *m_struct)
+void	write_name_or_comment(char *str, t_struct *data)
 {
-	char *substring;//free
-	int i = 0;
+	char *substring;
+	int i;
 
-	if (is_name)
+	i = 0;
+	if (ft_strnequ(str, NAME_CMD_STRING, 5) == 0)//
+	{
+		if (!check_length(str, 1))//TODO можно, чтобы эта функция возвращала указатель на место начала имени, если всё ок, чтобы потом выделить строку именно с этого момента (см. ниже)
+		{
+			free(str);
+			error_management("length", data, 1);
+		}
 		substring = ft_strsub(str, 5, ft_strlen(str) - 1 - 5);
+		while (substring[i] == ' ')
+			i++;
+		data->name = &(substring[i]);//TODO переделать, надо, чтобы указатель был на начале строки для дальнейшего освобождения структуры
+	}
+	else if (ft_strnequ(str, COMMENT_CMD_STRING, 8) == 0)//TODO то же, что и выше,только на начало комментария
+	{
+		if (!check_length(str, 0))
+		{
+			free(str);
+			error_management("length", data, 1);
+		}
+		substring = ft_strsub(str, 8, ft_strlen(str) - 1 - 8);// ? -1
+		while (substring[i] == ' ')
+			i++;
+		data->comment = &(substring[i]);//TODO переделать, надо, чтобы указатель был на начале строки для дальнейшего освобождения структуры
+	}
 	else
-		substring = ft_strsub(str, 8, ft_strlen(str) - 1 - 8);
-	while (substring[i] == ' ')
-		i++;
-	if (is_name)
-		m_struct->name = &(substring[i]);
-	else
-		m_struct->comment = &(substring[i]);
-}
-
-void	is_correct_name_or_comment(char *str, t_struct *m_struct)
-{
-	int is_name;
-
-	if (str[ft_strlen(str) - 1] != ';')
-		ft_error(';');
-
-	is_name = -1;
-	if (str[1] == 'n' && ft_strnequ(str, NAME_CMD_STRING, 5) == 0)
-		is_name = 1;
-	else if (str[1] == 'c' && ft_strnequ(str, COMMENT_CMD_STRING, 8) == 0)
-		is_name = 0;
-	else
-		ft_error("Only a name or comment can begin with a \'.\'");
-
-
-	if (check_length(str, is_name))
-		set_name_or_comment(str, is_name, m_struct);
-	else
-		ft_error("length");
-
+	{
+		free(str);
+		error_management("Only a name or comment can begin with a \'.\'", data, 1);
+	}
 }
 
 int is_name_and_comment(t_struct *m_struct)
 {
-	return (m_struct->name != NULL && m_struct->comment != NULL) ? 1 : 0;
+	return ((m_struct->name != NULL && m_struct->comment != NULL) ? 1 : 0);
 }
 
-void check_string(char *str, t_struct *m_struct)
+void set_command(t_struct *m_struct, int command,  t_args *args)
 {
-	if (is_it_mark())
-
-		if (is_it_command())
-		{
-			command = is_correct_command(str);
-			is_correct_argument_types(command);
-		}
-
-
+	m_struct->instructions[i] = malloc();
+	m_struct->instructions[i]->function = command;
+	m_struct->instructions[i]->args = args;
 }
 
 
-void check_other_strings(int fd, char *str, t_struct *m_struct)
+void check_instruction_lines(char **file, t_struct *m_struct)
 {
-	check_string(str, m_struct);
+	int i = 0;
 
-	while (gnl(fd, &str) > 0)
+	while (i < file.length)
 	{
-		check_string(str, m_struct);
-
-
+		//check_instruction_line(file, i, m_struct);
 	}
-
-
-
-
 }
 
 
-
-void	refresh_main_struct(t_struct *main_struct)
+void	check_other_strings(int fd, char *str, t_struct *data)
 {
-	main_struct->comment = NULL;
-	main_struct->name = NULL;
-	main_struct->commands = NULL;
-}
+	char **file;
+	int i;
 
+	if (!is_name_and_comment(data))
+	{
+		free(str);
+		close (fd);
+		error_management("name and comment should be at the top of file", data, 1);
+	}
+	i = 0;
+	file = malloc(sizeof(char *) * 100); //вот это мне не нравится
+	file[i] = ft_strdup(str);
+	free(str);
+	while (get_next_line(fd, &str) > 0)
+	{
+		file[++i] = str;//записываю всё в массив
+	}
+	check_instruction_lines(file, data);
+
+	//free_array(file);
+}
 
 t_struct	*is_valid_file(char *file_name)
 {
-	int fd;
-	char *str;
-	int command;
-	t_struct *main_struct;
+	int			fd;
+	char		*str;
+	t_struct	*data;
 
-	main_struct = (t_struct *)malloc(sizeof(t_struct));
-	refresh_main_struct(main_struct);
-	fd = open(file_name, O_RDONLY);
-	while (gnl(fd, &str) > 0)
+	if ((fd = open(file_name, O_RDONLY)) == -1)
+		error_management("can't open the file", NULL, 1);
+	data = (t_struct *)ft_memalloc(sizeof(t_struct));
+	while (get_next_line(fd, &str) > 0)//TODO добавить ф-цию удаления пробелов ft_strtrim
 	{
-		if (str[0] == '\0' || str[0] == '#')
-			continue;
-		if (str[0] == '.')
-			is_correct_name_or_comment(str, main_struct);// checked ';'
-		else if (is_name_and_comment(main_struct))//!!!!!!!!!
+		if (str[0] != '#' && str[0] != '\0')//TODO ft_strrchr #
 		{
-			check_other_strings(fd, str, main_struct);//to check ';'
-			break;
+			if (str[0] == '.')
+				write_name_or_comment(str, data);
+			else
+			{
+				check_other_strings(fd, str, data); // TODO ';'
+				break;
+			}
 		}
-		else
-			ft_error("name and comment should be of the top of file", main_struct);
-	}//free str ?!
-	//is_all_right(&main_struct);
-	return main_struct;
+		free(str);
+	}
+	close(fd);
+	return (data);
+}
+
+char *change_extension(char *file_name)
+{
+	int i;
+	char	*new_file;
+
+	if (!file_name)
+		return (NULL);
+	i = ft_strlen(file_name);
+	while (i >= 0)
+	{
+		if (file_name[i] == '.')
+		{
+			if (i == 0 || ft_strcmp(file_name + i, ".s"))
+				return (NULL);
+			else
+			{
+				new_file = (char *)ft_memalloc((i + 5) * (sizeof(char)));
+				ft_strncpy(new_file, file_name, i);
+				ft_strncpy(&(new_file[i]), ".cor", 4);
+				return (new_file);
+			}
+		}
+		i--;
+	}
+	return (NULL);
 }
 
 int		main(int ac, char **av)
 {
 	int			i;
-	t_struct	*all_info;
+	t_struct	*data;
+	char		*new_file;
 
 	i = 1;
+	if (ac < 2)
+		error_management("error", NULL, 1);
 	while (i < ac)
 	{
-		all_info = is_valid_file(av[i]);
-		//create_byte_file(av[i], all_info);//buffer?
-		free_main_struct(all_info);
+		if (!(new_file = change_extension(av[i])))
+			write(2, "Wrong file name. Should have an \".s\" extension\n", 47);
+		else
+		{
+			data = is_valid_file(av[i]);
+			instructions_position(data);//checks that code length isn't exceeded
+			check_labels(data);
+			to_bytecode(new_file, data);
+			printf("file %s was successfully created\n", new_file);
+			free_data(data);
+		}
 		i++;
 	}
-	return 0;
+	return (0);
 }

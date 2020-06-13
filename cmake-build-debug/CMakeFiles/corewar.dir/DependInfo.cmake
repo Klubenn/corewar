@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
+  "/Users/student/corewar/asm.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/asm.c.o"
   "/Users/student/corewar/champ_exec_code.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/champ_exec_code.c.o"
   "/Users/student/corewar/print_file.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/print_file.c.o"
   "/Users/student/corewar/sample_t_struct.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/sample_t_struct.c.o"

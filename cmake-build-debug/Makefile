@@ -123,6 +123,33 @@ corewar/fast:
 	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/build
 .PHONY : corewar/fast
 
+asm.o: asm.c.o
+
+.PHONY : asm.o
+
+# target to build an object file
+asm.c.o:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/asm.c.o
+.PHONY : asm.c.o
+
+asm.i: asm.c.i
+
+.PHONY : asm.i
+
+# target to preprocess a source file
+asm.c.i:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/asm.c.i
+.PHONY : asm.c.i
+
+asm.s: asm.c.s
+
+.PHONY : asm.s
+
+# target to generate assembly for a file
+asm.c.s:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/asm.c.s
+.PHONY : asm.c.s
+
 champ_exec_code.o: champ_exec_code.c.o
 
 .PHONY : champ_exec_code.o
@@ -240,6 +267,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... corewar"
+	@echo "... asm.o"
+	@echo "... asm.i"
+	@echo "... asm.s"
 	@echo "... champ_exec_code.o"
 	@echo "... champ_exec_code.i"
 	@echo "... champ_exec_code.s"

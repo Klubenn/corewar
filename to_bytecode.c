@@ -6,7 +6,7 @@ void	write_backwards(int fd, void *source, int size)
 		write(fd, &(*(source + size)), 1);
 }
 
-void	bin_sign(int fd)
+void	bin_magic(int fd)
 {
 	int x = COREWAR_EXEC_MAGIC;
 
@@ -55,7 +55,7 @@ void    to_bytecode(char *new_file, t_struct *data)
 	int fd;
 
 	fd = open(new_file, O_WRONLY | O_APPEND | O_TRUNC | O_CREAT, 0644);
-	bin_sign(fd);
+	bin_magic(fd);
 	bin_champ_name(fd, data);
 	bin_null(fd);
 	bin_exec_code_size(fd, data);
@@ -65,36 +65,10 @@ void    to_bytecode(char *new_file, t_struct *data)
 	close(fd);
 }
 
-char *change_extension(char *file_name)
-{
-	int i;
-	char    *new_file;
 
-	if (!file_name)
-		return (NULL);
-	i = ft_strlen(file_name);
-	while (i >= 0)
-	{
-		if (file_name[i] == '.')
-		{
-			if (ft_strcmp(&(file_name[i]), ".s"))
-				return (NULL);
-			else
-			{
-				new_file = (char *)ft_memalloc((i + 5) * (sizeof(char)));
-				ft_strncpy(new_file, file_name, i);
-				ft_strncpy(&(new_file[i]), ".cor", 4);
-				return (new_file);
-			}
-		}
-		i--;
-	}
-	return (NULL);
-}
-
-t_op	op_calc(int num)
+t_op	op_calc(int num) //TODO наверное, лучше это просто сделать глобальным массивом, а не ф-цией
 {
-	t_op    op_tab[17] =
+	static t_op    op_tab[17] =
 			{
 					{0, 0, {0}, 0, 4},
 					{1, 1, {T_DIR}, 0, 4},
@@ -175,22 +149,4 @@ void	check_labels(t_struct *data)
 		}
 		label_1 = label_1->next;
 	}
-}
-
-int main(int ac, char **av)
-{
-	char *new_file;
-	t_struct *data;
-
-	data = temp_data("COVID-19", "This city is mine");//this should come from Kate
-	instructions_position(data);//check that code length isn't exceeded
-	check_labels(data);
-	if (!(new_file = change_extension(data->file_name)))
-	{
-		write(2, "Wrong file name. Should have an \".s\" extension\n", 47);
-		return (1);
-	}
-	to_bytecode(new_file, data);
-//	print_file(new_file); //print the contents of the generated file in hex format. remove later
-	return (0);
 }

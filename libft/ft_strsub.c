@@ -33,3 +33,4 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 	snew[i] = '\0';
 	return (snew);
 }
+

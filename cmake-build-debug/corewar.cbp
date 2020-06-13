@@ -82,6 +82,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/student/corewar/asm.c">
+			<Option target="corewar"/>
+		</Unit>
 		<Unit filename="/Users/student/corewar/asm.h">
 			<Option target="corewar"/>
 		</Unit>

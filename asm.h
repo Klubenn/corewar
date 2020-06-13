@@ -60,6 +60,9 @@ t_struct *temp_data(char *name, char *comment); //temporary function. should be 
 void	print_file(char *new_file);
 void	bin_exec_champ(int fd, t_struct *data);
 void	write_backwards(int fd, void *source, int size);
+void	instructions_position(t_struct *data);
+void	check_labels(t_struct *data);
+void    to_bytecode(char *new_file, t_struct *data);
 
 
 #endif //COREWAR_ASM_H
