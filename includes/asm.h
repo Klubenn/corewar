@@ -21,9 +21,11 @@ enum err_message
 	DOT_START,
 	MALLOC_FAIL,
 	LONG_NAME,
-	LONG_COMMENT,
+	LONG_COMM,
 	COMM_BEFORE_NAME,
 	QUOTES_BEGIN,
+	QUOTES_END,
+	SYNTAX_ERROR,
 };
 
 typedef	struct		s_op

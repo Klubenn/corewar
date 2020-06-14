@@ -31,9 +31,11 @@ void	print_error_message(enum err_message num)
 			"Only a name or a comment can begin with a \'.\'\n",				//DOT_START
 			"Memory allocation failed.\n",										//MALLOC_FAIL
 			"Champion name is too long.\n",										//LONG_NAME
-			"Champion comment is too long.\n",									//LONG_COMMENT
+			"Champion comment is too long.\n",									//LONG_COMM
 			"Champion name must be before comment.\n",							//COMM_BEFORE_NAME
 			"Name and comment should start with the quotes.\n",					//QUOTES_BEGIN
+			"Name and comment should end with the quotes.\n",					//QUOTES_END
+			"Syntax error.\n",													//SYNTAX_ERROR
 	};
 	ft_putstr_fd(ch[num], 2);
 }
@@ -90,64 +92,88 @@ int	check_other_strings(int fd, char *str, t_struct *data)
 
 char *continue_reading(int fd)
 {
+	char *small;
+	char *big;
+	char *tmp;
 
+	tmp = NULL;
+	while(get_next_line(fd, &small) > 0)
+	{
+		if (!tmp)
+			big = ft_strdup(small);
+		else
+			big = ft_strjoin(tmp, small);
+		if (ft_strchr(small, '"'))
+		{
+			free(small);
+			return (big);
+		}
+		free(tmp);
+		free(small);
+		tmp = big;
+		if (ft_strlen(big) > COMMENT_LENGTH)
+			break ;
+	}
+	return(NULL);
 }
 
-int		check_length(char *str, int fd, int is_name)
+int		check_ending(char *str)//TODO эту ф-цию можно использовать и дальше для проверки инструкций
+{
+	if (str)
+	{
+		while (*str == ' ' || *str == '\t')
+			str++;
+		if (!*str || *str == COMMENT_CHAR)
+			return (0);
+	}
+	return (1);
+}
+
+int 	write_name_comment(char *substring, t_struct *data, int len)
+{
+	if (len == PROG_NAME_LENGTH)
+	{
+		if (ft_strlen(substring) > len)
+			return (LONG_NAME);
+		data->name = substring;
+	}
+	else
+	{
+		if (ft_strlen(substring) > len)
+			return (LONG_COMM);
+		data->comment = substring;
+	}
+	return (0);
+}
+
+int		extract_name_comment(char *str, t_struct *data, int fd, int len)
 {
 	char *substring;
+	char *add_string;
 	int i;
-	int len;
 
 	while (*str == ' ' || *str == '\t')
 		str++;
 	if (!*str || *str != '"')
 		return(QUOTES_BEGIN);
-	else
+	i = 1;
+	while (str[i] && str[i] != '"')
+		i++;
+	if (!str[i])
 	{
-		i = 1;
-		while (str[i] && str[i] != '"')
-			i++;
-		if (!str[i])
-			substring = ft_strjoin(str, continue_reading(fd));
+		if (!(add_string = continue_reading(fd)))
+			return (QUOTES_END);
+		substring = ft_strjoin(str, add_string);
+		free(add_string);
 	}
-
-	if (is_name)
-		data->name = substring;
+	else if (!check_ending(str + i + 1))
+		substring = ft_strndup(str, i);
 	else
-		data->comment = substring;
-	while (substring[i] == ' ')
-		i++;
-	len = ft_strlen(&(substring[i])) - 1;//;
-	if ((is_name && len > PROG_NAME_LENGTH) ||
-		(!is_name && len > COMMENT_LENGTH) ||
-		(len < 1))
-		return 0;
-	else
-		return 1;
+		return (SYNTAX_ERROR);
+	return (write_name_comment(substring, data, len));
 }
 
-int 	extract_name(char *str, t_struct *data, int fd)
-{
-	if (!check_length(str, fd, 1))
-		return (LONG_NAME);
-	substring = ft_strsub(str, 5, ft_strlen(str) - 1 - 5);
-	while (substring[i] == ' ')
-		i++;
-	data->name = &(substring[i]);
-}
-
-int		extract_comment(char *str, t_struct *data, int fd)
-{
-	if (!check_length(str + 8, 0))
-		return (LONG_COMMENT);
-	substring = ft_strsub(str, 8, ft_strlen(str) - 1 - 8);// ? -1
-	while (substring[i] == ' ')
-		i++;
-	data->comment = &(substring[i]);//TODO переделать, надо, чтобы указатель был на начале строки для дальнейшего освобождения структуры
-}
-
-void	write_name_or_comment(char *str, t_struct *data, int fd)
+void	process_name_and_comment(char *str, t_struct *data, int fd)
 {
 	int err;
 
@@ -156,9 +182,9 @@ void	write_name_or_comment(char *str, t_struct *data, int fd)
 	if (*str == COMMENT_CHAR || !*str)
 		return ;
 	if (ft_strnequ(str, NAME_CMD_STRING, 5) == 0)
-		err = extract_name(str, data, fd);
+		err = extract_name_comment(str, data, fd, PROG_NAME_LENGTH);
 	else if (ft_strnequ(str, COMMENT_CMD_STRING, 8) == 0)
-		err = (data->name ? extract_comment(str, data,fd) : COMM_BEFORE_NAME);
+		err = (data->name ? extract_name_comment(str, data, fd, COMMENT_LENGTH) : COMM_BEFORE_NAME);
 	else
 		err = (TOP_FILE);
 	if (err)
@@ -185,22 +211,14 @@ void		process_string(char *str, t_struct *data, int fd)
 		error_management(error, data);
 	}
 }
-/*
-
-TODO ft_strrchr # чтобы отсечь комментарии с конца
-
- */
-
-int is_name_and_comment(t_struct *m_struct)
-{
-	return ((m_struct->name != NULL && m_struct->comment != NULL) ? 1 : 0);
-}
 
 int			check_end_input(char *str)
 {
 	while (*str == ' ' || *str == '\t')
 		str++;
-	return (*str ? 0 : 1);
+	if (!*str || *str == COMMENT_CHAR)
+		return (1);
+	return (0);
 }
 
 t_struct	*is_valid_file(char *file_name)
@@ -217,8 +235,8 @@ t_struct	*is_valid_file(char *file_name)
 		error_management(MALLOC_FAIL, NULL);
 	while (get_next_line(fd, &str) > 0)
 	{
-		if (!is_name_and_comment(data))
-			write_name_or_comment(str, data, fd);
+		if (!data->name || !data->comment)
+			process_name_and_comment(str, data, fd);
 		else
 			process_string(str, data, fd);
 		flag = check_end_input(str);
