@@ -1,4 +1,6 @@
-.name           "42"
+.name           "4#fff
+2"
+
 .comment        "Just a basic Winner Program"
 
 entree:	live	%42		# entree
@@ -43,23 +45,6 @@ tirb:	live	%1
 	zjmp	%:infi
 
 p32deb:	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
 	zjmp	%0
 
 p32:	sub	r6,r4,r6
@@ -167,45 +152,6 @@ p64deb:	zjmp	%0
 	zjmp	%0
 	zjmp	%0
 	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
-	zjmp	%0
 
 p64:	ld	%10,r8
 	sub	r6,r8,r6
@@ -230,7 +176,7 @@ tirdow:	ld	%425,r2
 tird:	live	%42
 	sti	r10,%:fin,r2
 	sti	r10,%:fin,r3
-	.add	r4,r5,r4
+	add	r4,r5,r4
 	add	r3,r4,r3
 	sub	r2,r4,r2
 	zjmp	%:tirdow
@@ -239,4 +185,3 @@ tird:	live	%42
 	zjmp	%:p1
 
 fin:	live	%633
- 	# trtrtrt

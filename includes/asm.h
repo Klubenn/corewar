@@ -11,6 +11,20 @@
 typedef struct		s_label t_label;
 typedef struct		s_instruction t_instruction;
 
+enum err_message
+{
+	USAGE = 1,
+	FILE_NAME,
+	END_INPUT,
+	NO_FILE,
+	TOP_FILE,
+	DOT_START,
+	MALLOC_FAIL,
+	LONG_NAME,
+	LONG_COMMENT,
+	COMM_BEFORE_NAME,
+	QUOTES_BEGIN,
+};
 
 typedef	struct		s_op
 {
@@ -63,7 +77,7 @@ void	write_backwards(int fd, void *source, int size);
 void	instructions_position(t_struct *data);
 void	check_labels(t_struct *data);
 void    to_bytecode(char *new_file, t_struct *data);
-void	error_management(char *str, t_struct *data);
+void	error_management(int err, t_struct *data);
 
 
 #endif //COREWAR_ASM_H
