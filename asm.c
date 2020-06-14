@@ -24,7 +24,7 @@ void	free_data(t_struct *data)
 	free(data);//TODO write more later
 }
 
-void	error_management(char *str, t_struct *data, int exiting)
+void	error_management(char *str, t_struct *data)
 {
 	int error;
 
@@ -36,8 +36,7 @@ void	error_management(char *str, t_struct *data, int exiting)
 	}
 	if (data)
 		free_data(data);
-	if (exiting)
-		exit(error);
+	exit(error);
 }
 
 int		check_length(char *str, int is_name)//TODO можно при ошибке возвращать 0 или отрицательное значение, а если всё верно, позицию начала имени/комментария
@@ -62,7 +61,7 @@ int		check_length(char *str, int is_name)//TODO можно при ошибке �
 		return 1;
 }
 
-void	write_name_or_comment(char *str, t_struct *data)
+int		write_name_or_comment(char *str, t_struct *data, int fd)
 {
 	char *substring;
 	int i;
@@ -71,10 +70,7 @@ void	write_name_or_comment(char *str, t_struct *data)
 	if (ft_strnequ(str, NAME_CMD_STRING, 5) == 0)//
 	{
 		if (!check_length(str, 1))//TODO можно, чтобы эта функция возвращала указатель на место начала имени, если всё ок, чтобы потом выделить строку именно с этого момента (см. ниже)
-		{
-			free(str);
-			error_management("length", data, 1);
-		}
+			return (1);
 		substring = ft_strsub(str, 5, ft_strlen(str) - 1 - 5);
 		while (substring[i] == ' ')
 			i++;
@@ -83,10 +79,7 @@ void	write_name_or_comment(char *str, t_struct *data)
 	else if (ft_strnequ(str, COMMENT_CMD_STRING, 8) == 0)//TODO то же, что и выше,только на начало комментария
 	{
 		if (!check_length(str, 0))
-		{
-			free(str);
-			error_management("length", data, 1);
-		}
+			return (1);
 		substring = ft_strsub(str, 8, ft_strlen(str) - 1 - 8);// ? -1
 		while (substring[i] == ' ')
 			i++;
@@ -95,7 +88,7 @@ void	write_name_or_comment(char *str, t_struct *data)
 	else
 	{
 		free(str);
-		error_management("Only a name or comment can begin with a \'.\'", data, 1);
+		error_management("Only a name or comment can begin with a \'.\'", data);
 	}
 }
 
@@ -128,12 +121,7 @@ void	check_other_strings(int fd, char *str, t_struct *data)
 	char **file;
 	int i;
 
-	if (!is_name_and_comment(data))
-	{
-		free(str);
-		close (fd);
-		error_management("name and comment should be at the top of file", data, 1);
-	}
+
 	i = 0;
 	file = malloc(sizeof(char *) * 100); //вот это мне не нравится
 	file[i] = ft_strdup(str);
@@ -147,30 +135,54 @@ void	check_other_strings(int fd, char *str, t_struct *data)
 	//free_array(file);
 }
 
+void		process_string(char *str, t_struct *data, int fd)
+{
+	int	error;
+
+	if (str[0] == '.')
+		error = write_name_or_comment(str, data, fd);
+	else if (!is_name_and_comment(data))
+		error = 2;
+	else
+		error = check_other_strings(fd, str, data);
+	if (error)
+	{
+		free(str);
+		close (fd);
+		if (error == 1)
+			error_management("", data);
+		if (error == 2)
+			error_management("name and comment should be at the top of file", data);
+		if (error == 3)
+			error_management("", data);
+	}
+}
+
 t_struct	*is_valid_file(char *file_name)
 {
 	int			fd;
+	int 		flag;
 	char		*str;
+	char		*str_trim;
 	t_struct	*data;
 
+	flag = 0;
 	if ((fd = open(file_name, O_RDONLY)) == -1)
-		error_management("can't open the file", NULL, 1);
-	data = (t_struct *)ft_memalloc(sizeof(t_struct));
-	while (get_next_line(fd, &str) > 0)//TODO добавить ф-цию удаления пробелов ft_strtrim
+		error_management("can't open the file", NULL);
+	if (!(data = (t_struct *)ft_memalloc(sizeof(t_struct))))
+		return (NULL);
+	while (get_next_line(fd, &str) > 0)
 	{
-		if (str[0] != '#' && str[0] != '\0')//TODO ft_strrchr #
-		{
-			if (str[0] == '.')
-				write_name_or_comment(str, data);
-			else
-			{
-				check_other_strings(fd, str, data); // TODO ';'
-				break;
-			}
-		}
+		str_trim = ft_strtrim(str);
+		flag = (str_trim && (!*str_trim || *str_trim == COMMENT_CHAR)) ? 1 : 0;
 		free(str);
+		if (str_trim && *str_trim != COMMENT_CHAR && *str_trim)//TODO ft_strrchr # чтобы отсечь комментарии с конца
+			process_string(str_trim, data, fd);
+		free(str_trim);
 	}
-	close(fd);
+	close(fd);//TODO удостовериться, что последняя строка пустая
+	if (!flag)
+		error_management("Syntax error - unexpected end of input.", data);
 	return (data);
 }
 
@@ -209,7 +221,7 @@ int		main(int ac, char **av)
 
 	i = 1;
 	if (ac < 2)
-		error_management("error", NULL, 1);
+		error_management("error", NULL);
 	while (i < ac)
 	{
 		if (!(new_file = change_extension(av[i])))

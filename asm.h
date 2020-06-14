@@ -63,6 +63,7 @@ void	write_backwards(int fd, void *source, int size);
 void	instructions_position(t_struct *data);
 void	check_labels(t_struct *data);
 void    to_bytecode(char *new_file, t_struct *data);
+void	error_management(char *str, t_struct *data);
 
 
 #endif //COREWAR_ASM_H
