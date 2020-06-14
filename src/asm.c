@@ -106,7 +106,8 @@ char *continue_reading(int fd)
 		if (ft_strchr(small, '"'))
 		{
 			free(small);
-			return (big);
+			return (big);//TODO переделать, чтобы присоединять только нужную часть до кавычек, проверить, что
+			//TODO идет после кавычек
 		}
 		free(tmp);
 		free(small);

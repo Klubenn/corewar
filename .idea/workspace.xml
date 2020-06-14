@@ -12,9 +12,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b15eac9-3a32-49f9-9742-8af87cbc1fd6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/asm.h" beforeDir="false" afterPath="$PROJECT_DIR$/includes/asm.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libft/ft_strchr.c" beforeDir="false" afterPath="$PROJECT_DIR$/libft/ft_strchr.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/asm.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/asm.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -77,7 +74,7 @@
       <workItem from="1590433969855" duration="317000" />
       <workItem from="1590833292822" duration="2073000" />
       <workItem from="1591439692648" duration="5328000" />
-      <workItem from="1591986222155" duration="51674000" />
+      <workItem from="1591986222155" duration="52395000" />
     </task>
     <servers />
   </component>
@@ -133,5 +130,9 @@
       <screen x="0" y="23" width="1920" height="977" />
     </state>
     <state x="625" y="236" key="run.anything.popup/0.23.1920.977@0.23.1920.977" timestamp="1591997721961" />
+    <state x="625" y="238" width="670" height="676" key="search.everywhere.popup" timestamp="1592164105512">
+      <screen x="0" y="23" width="1920" height="977" />
+    </state>
+    <state x="625" y="238" width="670" height="676" key="search.everywhere.popup/0.23.1920.977@0.23.1920.977" timestamp="1592164105512" />
   </component>
 </project>
