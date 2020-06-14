@@ -2,7 +2,7 @@
 // It is only needed to test the functionality of the second part
 //
 
-#include "asm.h"
+#include "../includes/asm.h"
 
 #define LIVE	1
 #define LD		2

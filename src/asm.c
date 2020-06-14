@@ -16,8 +16,8 @@
 
 #include <stdio.h>
 #include <libft.h>
-#include "op.h"
-#include "asm.h"
+#include "../includes/op.h"
+#include "../includes/asm.h"
 
 void	free_data(t_struct *data)
 {
