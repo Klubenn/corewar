@@ -7,11 +7,11 @@ PRINTF = lftprintf
 LIBFTPRINTF = ./libft/ft_printf/libftprintf.a
 LIBFTLIB = ./libft/libft.a
 
-INCL_DIR = includes
+INCL_DIR = ./includes/
 INCL_H = asm.h op.h
 INCL = $(addprefix $(INCL_DIR),$(INCL_H))
 
-SRC_DIR = src
+SRC_DIR = ./src/
 SRC_C = asm.c champ_exec_code.c to_bytecode.c
 SRC = $(addprefix $(SRC_DIR),$(SRC_C))
 
@@ -23,7 +23,7 @@ $(LIBFT_DIR)$(LIBFT):
 	make -C $(LIBFT_DIR)
 
 $(NAME): $(SRC) $(INCL) $(LIBFTLIB) $(LIBFTPRINTF)
-	gcc $(FLAGS) $(SRC) -I$(INCL_DIR) -L$(LIBFT_DIR) -$(LIBFT) -L$(PRINTF_DIR) -$(PRINTF) -o $(NAME)
+	gcc $(FLAGS) $(SRC) -I$(INCL_DIR) -I$(LIBFT_DIR) -L$(LIBFT_DIR) -$(LIBFT) -L$(PRINTF_DIR) -$(PRINTF) -o $(NAME)
 
 clean:
 	make clean -C $(LIBFT_DIR)
