@@ -2,8 +2,11 @@
 
 void	write_backwards(int fd, void *source, int size)
 {
+	char *c;
+
+	c = (char *)source;
 	while (--size >= 0)
-		write(fd, &(*(source + size)), 1);
+		write(fd, c, 1);
 }
 
 void	bin_magic(int fd)

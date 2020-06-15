@@ -54,38 +54,38 @@ void	error_management(int err, t_struct *data)
 	exit(1);
 }
 
-void set_command(t_struct *m_struct, int command,  t_args *args)
-{
-	m_struct->instructions[i] = malloc();
-	m_struct->instructions[i]->function = command;
-	m_struct->instructions[i]->args = args;
-}
-
-void check_instruction_lines(char **file, t_struct *m_struct)
-{
-	int i = 0;
-
-	while (i < file.length)
-	{
-		//check_instruction_line(file, i, m_struct);
-	}
-}
+//void set_command(t_struct *m_struct, int command,  t_args *args)
+//{
+//	m_struct->instructions[i] = malloc();
+//	m_struct->instructions[i]->function = command;
+//	m_struct->instructions[i]->args = args;
+//}
+//
+//void check_instruction_lines(char **file, t_struct *m_struct)
+//{
+//	int i = 0;
+//
+//	while (i < file.length)
+//	{
+//		//check_instruction_line(file, i, m_struct);
+//	}
+//}
 
 int	check_other_strings(int fd, char *str, t_struct *data)
 {
-	char **file;
-	int i;
-
-
-	i = 0;
-	file = malloc(sizeof(char *) * 100); //вот это мне не нравится
-	file[i] = ft_strdup(str);
-	free(str);
-	while (get_next_line(fd, &str) > 0)
-	{
-		file[++i] = str;//записываю всё в массив
-	}
-	check_instruction_lines(file, data);
+//	char **file;
+//	int i;
+//
+//
+//	i = 0;
+//	file = malloc(sizeof(char *) * 100); //вот это мне не нравится
+//	file[i] = ft_strdup(str);
+//	free(str);
+//	while (get_next_line(fd, &str) > 0)
+//	{
+//		file[++i] = str;//записываю всё в массив
+//	}
+//	check_instruction_lines(file, data);
 	//TODO if error
 	//free_array(file);
 }
@@ -114,7 +114,10 @@ int 	finish_reading(char **string, char *tmp2, char *small, char *big)
 {
 	char *tmp1;
 
-	tmp1 = big;
+	if (big)
+		tmp1 = big;
+	else
+		tmp1 = ft_strdup("");
 	if (!check_ending(tmp2 + 1))
 	{
 		big = ft_strndup(small, tmp2 + 1 - small);
@@ -133,7 +136,7 @@ int		continue_reading(int fd, char **string)
 	char *tmp1;
 	char *tmp2;
 
-	tmp1 = ft_strdup("");
+	tmp1 = ft_strdup("\n");
 	big = NULL;
 	while(get_next_line(fd, &small) > 0)
 	{
@@ -193,7 +196,7 @@ int		extract_name_comment(char *str, t_struct *data, int fd, int len)
 		free(add_string);
 	}
 	else if (!check_ending(str + i + 1))
-		substring = ft_strndup(str, i);
+		substring = ft_strndup(str, i + 1);
 	else
 		return (SYNTAX_ERROR);
 	return (write_name_comment(substring, data, len));
@@ -207,10 +210,10 @@ void	process_name_and_comment(char *str, t_struct *data, int fd)
 		str++;
 	if (*str == COMMENT_CHAR || !*str)
 		return ;
-	if (ft_strnequ(str, NAME_CMD_STRING, 5) == 0)
-		err = extract_name_comment(str, data, fd, PROG_NAME_LENGTH);
-	else if (ft_strnequ(str, COMMENT_CMD_STRING, 8) == 0)
-		err = (data->name ? extract_name_comment(str, data, fd, COMMENT_LENGTH) : COMM_BEFORE_NAME);
+	if (ft_strnequ(str, NAME_CMD_STRING, 5))
+		err = extract_name_comment(str + 5, data, fd, PROG_NAME_LENGTH);
+	else if (ft_strnequ(str, COMMENT_CMD_STRING, 8))
+		err = (data->name ? extract_name_comment(str + 8, data, fd, COMMENT_LENGTH) : COMM_BEFORE_NAME);
 	else
 		err = (TOP_FILE);
 	if (err)
@@ -256,6 +259,8 @@ t_struct	*is_valid_file(char *file_name)
 			process_name_and_comment(str, data, fd);
 		else
 			process_string(str, data, fd);
+		if (data->name && data->comment)
+			printf("%s | %s\n", data->name, data->comment);
 		flag = check_ending(str);
 		free(str);
 	}

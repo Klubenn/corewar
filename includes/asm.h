@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <limits.h>
 #include "libft.h"
-#include <zconf.h>
+//#include <zconf.h>
 #include "op.h"
 
 typedef struct		s_label t_label;
