@@ -90,32 +90,12 @@ int	check_other_strings(int fd, char *str, t_struct *data)
 	//free_array(file);
 }
 
-char *continue_reading(int fd)
+void	free_strings(char *str1, char *str2, char *str3, char *str4)
 {
-	char *small;
-	char *big;
-	char *tmp;
-
-	tmp = NULL;
-	while(get_next_line(fd, &small) > 0)
-	{
-		if (!tmp)
-			big = ft_strdup(small);
-		else
-			big = ft_strjoin(tmp, small);
-		if (ft_strchr(small, '"'))
-		{
-			free(small);
-			return (big);//TODO переделать, чтобы присоединять только нужную часть до кавычек, проверить, что
-			//TODO идет после кавычек
-		}
-		free(tmp);
-		free(small);
-		tmp = big;
-		if (ft_strlen(big) > COMMENT_LENGTH)
-			break ;
-	}
-	return(NULL);
+	free(str1);
+	free(str2);
+	free(str3);
+	free(str4);
 }
 
 int		check_ending(char *str)//TODO эту ф-цию можно использовать и дальше для проверки инструкций
@@ -130,18 +110,63 @@ int		check_ending(char *str)//TODO эту ф-цию можно использо�
 	return (1);
 }
 
+int 	finish_reading(char **string, char *tmp2, char *small, char *big)
+{
+	char *tmp1;
+
+	tmp1 = big;
+	if (!check_ending(tmp2 + 1))
+	{
+		big = ft_strndup(small, tmp2 + 1 - small);
+		*string = ft_strjoin(tmp1, big);
+		free_strings(small, tmp1, big, NULL);
+		return (0);
+	}
+	free_strings(small, tmp1, big, NULL);
+	return (SYNTAX_ERROR);
+}
+
+int		continue_reading(int fd, char **string)
+{
+	char *small;
+	char *big;
+	char *tmp1;
+	char *tmp2;
+
+	tmp1 = ft_strdup("");
+	big = NULL;
+	while(get_next_line(fd, &small) > 0)
+	{
+		if ((tmp2 = ft_strchr(small, '"')))
+			return (finish_reading(string, tmp2, small, big));
+		big = ft_strjoin(tmp1, small);
+		free_strings(tmp1, small, NULL, NULL);
+		tmp1 = big;
+		if (ft_strlen(big) > COMMENT_LENGTH)
+			break ;
+	}
+	free(tmp1);
+	return(QUOTES_END);
+}
+
 int 	write_name_comment(char *substring, t_struct *data, int len)
 {
 	if (len == PROG_NAME_LENGTH)
 	{
 		if (ft_strlen(substring) > len)
+		{
+			free(substring);
 			return (LONG_NAME);
+		}
 		data->name = substring;
 	}
 	else
 	{
 		if (ft_strlen(substring) > len)
+		{
+			free(substring);
 			return (LONG_COMM);
+		}
 		data->comment = substring;
 	}
 	return (0);
@@ -162,8 +187,8 @@ int		extract_name_comment(char *str, t_struct *data, int fd, int len)
 		i++;
 	if (!str[i])
 	{
-		if (!(add_string = continue_reading(fd)))
-			return (QUOTES_END);
+		if ((i = continue_reading(fd, &add_string)))
+			return (i);
 		substring = ft_strjoin(str, add_string);
 		free(add_string);
 	}
@@ -213,15 +238,6 @@ void		process_string(char *str, t_struct *data, int fd)
 	}
 }
 
-int			check_end_input(char *str)
-{
-	while (*str == ' ' || *str == '\t')
-		str++;
-	if (!*str || *str == COMMENT_CHAR)
-		return (1);
-	return (0);
-}
-
 t_struct	*is_valid_file(char *file_name)
 {
 	int			fd;
@@ -229,7 +245,7 @@ t_struct	*is_valid_file(char *file_name)
 	char		*str;
 	t_struct	*data;
 
-	flag = 0;
+	flag = 1;
 	if ((fd = open(file_name, O_RDONLY)) == -1)
 		error_management(NO_FILE, NULL);
 	if (!(data = (t_struct *)ft_memalloc(sizeof(t_struct))))
@@ -240,11 +256,11 @@ t_struct	*is_valid_file(char *file_name)
 			process_name_and_comment(str, data, fd);
 		else
 			process_string(str, data, fd);
-		flag = check_end_input(str);
+		flag = check_ending(str);
 		free(str);
 	}
 	close(fd);
-	if (!flag)
+	if (flag)
 		error_management(END_INPUT, data);
 	return (data);
 }
