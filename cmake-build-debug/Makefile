@@ -123,140 +123,194 @@ corewar/fast:
 	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/build
 .PHONY : corewar/fast
 
-asm.o: asm.c.o
+other/print_file.o: other/print_file.c.o
 
-.PHONY : asm.o
-
-# target to build an object file
-asm.c.o:
-	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/asm.c.o
-.PHONY : asm.c.o
-
-asm.i: asm.c.i
-
-.PHONY : asm.i
-
-# target to preprocess a source file
-asm.c.i:
-	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/asm.c.i
-.PHONY : asm.c.i
-
-asm.s: asm.c.s
-
-.PHONY : asm.s
-
-# target to generate assembly for a file
-asm.c.s:
-	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/asm.c.s
-.PHONY : asm.c.s
-
-champ_exec_code.o: champ_exec_code.c.o
-
-.PHONY : champ_exec_code.o
+.PHONY : other/print_file.o
 
 # target to build an object file
-champ_exec_code.c.o:
-	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/champ_exec_code.c.o
-.PHONY : champ_exec_code.c.o
+other/print_file.c.o:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/other/print_file.c.o
+.PHONY : other/print_file.c.o
 
-champ_exec_code.i: champ_exec_code.c.i
+other/print_file.i: other/print_file.c.i
 
-.PHONY : champ_exec_code.i
+.PHONY : other/print_file.i
 
 # target to preprocess a source file
-champ_exec_code.c.i:
-	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/champ_exec_code.c.i
-.PHONY : champ_exec_code.c.i
+other/print_file.c.i:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/other/print_file.c.i
+.PHONY : other/print_file.c.i
 
-champ_exec_code.s: champ_exec_code.c.s
+other/print_file.s: other/print_file.c.s
 
-.PHONY : champ_exec_code.s
+.PHONY : other/print_file.s
 
 # target to generate assembly for a file
-champ_exec_code.c.s:
-	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/champ_exec_code.c.s
-.PHONY : champ_exec_code.c.s
+other/print_file.c.s:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/other/print_file.c.s
+.PHONY : other/print_file.c.s
 
-print_file.o: print_file.c.o
+other/sample_t_struct.o: other/sample_t_struct.c.o
 
-.PHONY : print_file.o
+.PHONY : other/sample_t_struct.o
 
 # target to build an object file
-print_file.c.o:
-	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/print_file.c.o
-.PHONY : print_file.c.o
+other/sample_t_struct.c.o:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/other/sample_t_struct.c.o
+.PHONY : other/sample_t_struct.c.o
 
-print_file.i: print_file.c.i
+other/sample_t_struct.i: other/sample_t_struct.c.i
 
-.PHONY : print_file.i
+.PHONY : other/sample_t_struct.i
 
 # target to preprocess a source file
-print_file.c.i:
-	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/print_file.c.i
-.PHONY : print_file.c.i
+other/sample_t_struct.c.i:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/other/sample_t_struct.c.i
+.PHONY : other/sample_t_struct.c.i
 
-print_file.s: print_file.c.s
+other/sample_t_struct.s: other/sample_t_struct.c.s
 
-.PHONY : print_file.s
+.PHONY : other/sample_t_struct.s
 
 # target to generate assembly for a file
-print_file.c.s:
-	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/print_file.c.s
-.PHONY : print_file.c.s
+other/sample_t_struct.c.s:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/other/sample_t_struct.c.s
+.PHONY : other/sample_t_struct.c.s
 
-sample_t_struct.o: sample_t_struct.c.o
+src/asm.o: src/asm.c.o
 
-.PHONY : sample_t_struct.o
+.PHONY : src/asm.o
 
 # target to build an object file
-sample_t_struct.c.o:
-	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/sample_t_struct.c.o
-.PHONY : sample_t_struct.c.o
+src/asm.c.o:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/src/asm.c.o
+.PHONY : src/asm.c.o
 
-sample_t_struct.i: sample_t_struct.c.i
+src/asm.i: src/asm.c.i
 
-.PHONY : sample_t_struct.i
+.PHONY : src/asm.i
 
 # target to preprocess a source file
-sample_t_struct.c.i:
-	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/sample_t_struct.c.i
-.PHONY : sample_t_struct.c.i
+src/asm.c.i:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/src/asm.c.i
+.PHONY : src/asm.c.i
 
-sample_t_struct.s: sample_t_struct.c.s
+src/asm.s: src/asm.c.s
 
-.PHONY : sample_t_struct.s
+.PHONY : src/asm.s
 
 # target to generate assembly for a file
-sample_t_struct.c.s:
-	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/sample_t_struct.c.s
-.PHONY : sample_t_struct.c.s
+src/asm.c.s:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/src/asm.c.s
+.PHONY : src/asm.c.s
 
-to_bytecode.o: to_bytecode.c.o
+src/champ_exec_code.o: src/champ_exec_code.c.o
 
-.PHONY : to_bytecode.o
+.PHONY : src/champ_exec_code.o
 
 # target to build an object file
-to_bytecode.c.o:
-	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/to_bytecode.c.o
-.PHONY : to_bytecode.c.o
+src/champ_exec_code.c.o:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/src/champ_exec_code.c.o
+.PHONY : src/champ_exec_code.c.o
 
-to_bytecode.i: to_bytecode.c.i
+src/champ_exec_code.i: src/champ_exec_code.c.i
 
-.PHONY : to_bytecode.i
+.PHONY : src/champ_exec_code.i
 
 # target to preprocess a source file
-to_bytecode.c.i:
-	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/to_bytecode.c.i
-.PHONY : to_bytecode.c.i
+src/champ_exec_code.c.i:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/src/champ_exec_code.c.i
+.PHONY : src/champ_exec_code.c.i
 
-to_bytecode.s: to_bytecode.c.s
+src/champ_exec_code.s: src/champ_exec_code.c.s
 
-.PHONY : to_bytecode.s
+.PHONY : src/champ_exec_code.s
 
 # target to generate assembly for a file
-to_bytecode.c.s:
-	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/to_bytecode.c.s
-.PHONY : to_bytecode.c.s
+src/champ_exec_code.c.s:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/src/champ_exec_code.c.s
+.PHONY : src/champ_exec_code.c.s
+
+src/labels.o: src/labels.c.o
+
+.PHONY : src/labels.o
+
+# target to build an object file
+src/labels.c.o:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/src/labels.c.o
+.PHONY : src/labels.c.o
+
+src/labels.i: src/labels.c.i
+
+.PHONY : src/labels.i
+
+# target to preprocess a source file
+src/labels.c.i:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/src/labels.c.i
+.PHONY : src/labels.c.i
+
+src/labels.s: src/labels.c.s
+
+.PHONY : src/labels.s
+
+# target to generate assembly for a file
+src/labels.c.s:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/src/labels.c.s
+.PHONY : src/labels.c.s
+
+src/op.o: src/op.c.o
+
+.PHONY : src/op.o
+
+# target to build an object file
+src/op.c.o:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/src/op.c.o
+.PHONY : src/op.c.o
+
+src/op.i: src/op.c.i
+
+.PHONY : src/op.i
+
+# target to preprocess a source file
+src/op.c.i:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/src/op.c.i
+.PHONY : src/op.c.i
+
+src/op.s: src/op.c.s
+
+.PHONY : src/op.s
+
+# target to generate assembly for a file
+src/op.c.s:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/src/op.c.s
+.PHONY : src/op.c.s
+
+src/to_bytecode.o: src/to_bytecode.c.o
+
+.PHONY : src/to_bytecode.o
+
+# target to build an object file
+src/to_bytecode.c.o:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/src/to_bytecode.c.o
+.PHONY : src/to_bytecode.c.o
+
+src/to_bytecode.i: src/to_bytecode.c.i
+
+.PHONY : src/to_bytecode.i
+
+# target to preprocess a source file
+src/to_bytecode.c.i:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/src/to_bytecode.c.i
+.PHONY : src/to_bytecode.c.i
+
+src/to_bytecode.s: src/to_bytecode.c.s
+
+.PHONY : src/to_bytecode.s
+
+# target to generate assembly for a file
+src/to_bytecode.c.s:
+	$(MAKE) -f CMakeFiles/corewar.dir/build.make CMakeFiles/corewar.dir/src/to_bytecode.c.s
+.PHONY : src/to_bytecode.c.s
 
 # Help Target
 help:
@@ -267,21 +321,27 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... corewar"
-	@echo "... asm.o"
-	@echo "... asm.i"
-	@echo "... asm.s"
-	@echo "... champ_exec_code.o"
-	@echo "... champ_exec_code.i"
-	@echo "... champ_exec_code.s"
-	@echo "... print_file.o"
-	@echo "... print_file.i"
-	@echo "... print_file.s"
-	@echo "... sample_t_struct.o"
-	@echo "... sample_t_struct.i"
-	@echo "... sample_t_struct.s"
-	@echo "... to_bytecode.o"
-	@echo "... to_bytecode.i"
-	@echo "... to_bytecode.s"
+	@echo "... other/print_file.o"
+	@echo "... other/print_file.i"
+	@echo "... other/print_file.s"
+	@echo "... other/sample_t_struct.o"
+	@echo "... other/sample_t_struct.i"
+	@echo "... other/sample_t_struct.s"
+	@echo "... src/asm.o"
+	@echo "... src/asm.i"
+	@echo "... src/asm.s"
+	@echo "... src/champ_exec_code.o"
+	@echo "... src/champ_exec_code.i"
+	@echo "... src/champ_exec_code.s"
+	@echo "... src/labels.o"
+	@echo "... src/labels.i"
+	@echo "... src/labels.s"
+	@echo "... src/op.o"
+	@echo "... src/op.i"
+	@echo "... src/op.s"
+	@echo "... src/to_bytecode.o"
+	@echo "... src/to_bytecode.i"
+	@echo "... src/to_bytecode.s"
 .PHONY : help
 
 

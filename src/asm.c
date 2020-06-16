@@ -1,17 +1,13 @@
-//
-// Created by Somebody on 11.06.2020.
-//
-
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   asm.c											  :+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: etuffleb <etuffleb@student.42.fr>		  +#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2019/11/28 18:07:51 by etuffleb		  #+#	#+#			 */
-/*   Updated: 2020/03/15 20:57:39 by etuffleb		 ###   ########.fr	   */
-/*																			*/
+/*																			  */
+/*														:::	  ::::::::        */
+/*   asm.c											  :+:	  :+:	:+:       */
+/*													+:+ +:+		 +:+	      */
+/*   By: etuffleb <etuffleb@student.42.fr>		  +#+  +:+	   +#+	          */
+/*												+#+#+#+#+#+   +#+		      */
+/*   Created: 2019/11/28 18:07:51 by etuffleb		  #+#	#+#			      */
+/*   Updated: 2020/03/15 20:57:39 by etuffleb		 ###   ########.fr	      */
+/*																			  */
 /* ************************************************************************** */
 
 #include <stdio.h>
@@ -54,40 +50,24 @@ void	error_management(int err, t_struct *data)
 	exit(1);
 }
 
-//void set_command(t_struct *m_struct, int command,  t_args *args)
-//{
-//	m_struct->instructions[i] = malloc();
-//	m_struct->instructions[i]->function = command;
-//	m_struct->instructions[i]->args = args;
-//}
-//
-//void check_instruction_lines(char **file, t_struct *m_struct)
-//{
-//	int i = 0;
-//
-//	while (i < file.length)
-//	{
-//		//check_instruction_line(file, i, m_struct);
-//	}
-//}
-
 int	check_other_strings(int fd, char *str, t_struct *data)
 {
-//	char **file;
-//	int i;
-//
-//
-//	i = 0;
-//	file = malloc(sizeof(char *) * 100); //вот это мне не нравится
-//	file[i] = ft_strdup(str);
-//	free(str);
-//	while (get_next_line(fd, &str) > 0)
-//	{
-//		file[++i] = str;//записываю всё в массив
-//	}
-//	check_instruction_lines(file, data);
-	//TODO if error
-	//free_array(file);
+	t_op *op;
+	int instr_pointer;
+	int parametr_pointer;
+	int if_label;
+
+	if ((if_label = check_label(data, str)) < 0)//pointer after label?
+		return (MALLOC_FAIL);
+	//TODO не нужна отдельная функция для перескока, просто пишешь (str + if_label) и строка сдвинется
+	//TODO можно вызвать str = trim_start(str + if_label) чтобы обрезать пробелы после лейбла
+	instr_pointer = skipper(if_label, str);//skips spaces or skips label and spaces
+	if (!op = check_op(&str[instr_pointer]))
+		error_management();
+	parametr_pointer = skipper(1, &str[instr_pointer]);//skips instruction and spaces
+	if (!check_param(&str[parametr_pointer], op))
+		error_management();
+	create_instruction(str, instr_pointer, parametr_pointer, data);
 }
 
 void	free_strings(char *str1, char *str2, char *str3, char *str4)
@@ -220,19 +200,28 @@ void	process_name_and_comment(char *str, t_struct *data, int fd)
 		error_management(err, data);
 }
 
+char 		*trim_start(char *str)
+{
+	if (str)
+	{
+		while(*str == ' ' || *str == '\t')
+			str++;
+	}
+	return (str);
+}
+
 void		process_string(char *str, t_struct *data, int fd)
 {
 	int		error;
 	char	*str_trim;
 
-	str_trim = ft_strtrim(str);
+	str_trim = trim_start(str);
 	if (!*str_trim || *str_trim == COMMENT_CHAR)
 		return ;
 	if (*str_trim == '.')
 		error = DOT_START;
 	else
 		error = check_other_strings(fd, str_trim, data);
-	free(str_trim);
 	if (error)
 	{
 		free(str);
@@ -259,8 +248,8 @@ t_struct	*is_valid_file(char *file_name)
 			process_name_and_comment(str, data, fd);
 		else
 			process_string(str, data, fd);
-		if (data->name && data->comment)
-			printf("%s | %s\n", data->name, data->comment);
+//		if (data->name && data->comment)
+//			printf("%s | %s\n", data->name, data->comment);
 		flag = check_ending(str);
 		free(str);
 	}

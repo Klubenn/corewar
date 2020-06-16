@@ -6,5 +6,5 @@ C_FLAGS = -g   -std=gnu99
 
 C_DEFINES = 
 
-C_INCLUDES = -I/Users/student/corewar/./libft 
+C_INCLUDES = -I/Users/student/corewar/./libft -I/Users/student/corewar/./includes 
 

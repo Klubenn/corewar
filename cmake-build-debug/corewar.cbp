@@ -45,6 +45,7 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/Users/student/corewar/./libft"/>
+					<Add directory="/Users/student/corewar/./includes"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/9.0.0/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
@@ -67,6 +68,7 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/Users/student/corewar/./libft"/>
+					<Add directory="/Users/student/corewar/./includes"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/9.0.0/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
@@ -82,25 +84,31 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/student/corewar/asm.c">
+		<Unit filename="/Users/student/corewar/includes/asm.h">
 			<Option target="corewar"/>
 		</Unit>
-		<Unit filename="/Users/student/corewar/asm.h">
+		<Unit filename="/Users/student/corewar/includes/op.h">
 			<Option target="corewar"/>
 		</Unit>
-		<Unit filename="/Users/student/corewar/champ_exec_code.c">
+		<Unit filename="/Users/student/corewar/other/print_file.c">
 			<Option target="corewar"/>
 		</Unit>
-		<Unit filename="/Users/student/corewar/op.h">
+		<Unit filename="/Users/student/corewar/other/sample_t_struct.c">
 			<Option target="corewar"/>
 		</Unit>
-		<Unit filename="/Users/student/corewar/print_file.c">
+		<Unit filename="/Users/student/corewar/src/asm.c">
 			<Option target="corewar"/>
 		</Unit>
-		<Unit filename="/Users/student/corewar/sample_t_struct.c">
+		<Unit filename="/Users/student/corewar/src/champ_exec_code.c">
 			<Option target="corewar"/>
 		</Unit>
-		<Unit filename="/Users/student/corewar/to_bytecode.c">
+		<Unit filename="/Users/student/corewar/src/labels.c">
+			<Option target="corewar"/>
+		</Unit>
+		<Unit filename="/Users/student/corewar/src/op.c">
+			<Option target="corewar"/>
+		</Unit>
+		<Unit filename="/Users/student/corewar/src/to_bytecode.c">
 			<Option target="corewar"/>
 		</Unit>
 		<Unit filename="/Users/student/corewar/CMakeLists.txt">

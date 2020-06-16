@@ -3,15 +3,11 @@
 # l'annee derniere
 #     VOALA
 #
-.name		"Celebration Funebre v0.99pl42
-.comment"
-.comment	"Jour
-
-
-J"
+.name		"Celebration Funebre v0.99pl42"
+.comment	"Jour"
 
 		ld   %0,r3		
-label:		zjmp %:avantdebt
+ label:		zjmp %:avantdebt
 		zjmp %0				# pour eviter ecrasement
 						# de l'instruction suivante
 code:		live %42			# 5

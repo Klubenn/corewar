@@ -68,6 +68,7 @@ typedef struct		s_struct
 	int 			code_length;
 	t_instruction	*instruction;
 	t_label			*label;
+	int 			label_presence;
 }					t_struct;
 
 typedef void (*t_f)(int fd, t_struct *data, t_instruction *instruction, t_args argument);
@@ -80,6 +81,8 @@ void	instructions_position(t_struct *data);
 void	check_labels(t_struct *data);
 void    to_bytecode(char *new_file, t_struct *data);
 void	error_management(int err, t_struct *data);
+int		check_other_strings(int fd, char *str, t_struct *data);
+int		check_label(t_struct *data, char *str);
 
 
 #endif //COREWAR_ASM_H

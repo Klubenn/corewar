@@ -4,17 +4,20 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/Users/student/corewar/asm.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/asm.c.o"
-  "/Users/student/corewar/champ_exec_code.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/champ_exec_code.c.o"
-  "/Users/student/corewar/print_file.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/print_file.c.o"
-  "/Users/student/corewar/sample_t_struct.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/sample_t_struct.c.o"
-  "/Users/student/corewar/to_bytecode.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/to_bytecode.c.o"
+  "/Users/student/corewar/other/print_file.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/other/print_file.c.o"
+  "/Users/student/corewar/other/sample_t_struct.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/other/sample_t_struct.c.o"
+  "/Users/student/corewar/src/asm.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/src/asm.c.o"
+  "/Users/student/corewar/src/champ_exec_code.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/src/champ_exec_code.c.o"
+  "/Users/student/corewar/src/labels.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/src/labels.c.o"
+  "/Users/student/corewar/src/op.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/src/op.c.o"
+  "/Users/student/corewar/src/to_bytecode.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/src/to_bytecode.c.o"
   )
 set(CMAKE_C_COMPILER_ID "AppleClang")
 
 # The include file search paths:
 set(CMAKE_C_TARGET_INCLUDE_PATH
   ".././libft"
+  ".././includes"
   )
 
 # Targets to which this target links.
