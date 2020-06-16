@@ -117,7 +117,7 @@ int 	finish_reading(char **string, char *tmp2, char *small, char *big)
 	if (big)
 		tmp1 = big;
 	else
-		tmp1 = ft_strdup("");
+		tmp1 = ft_strdup("\n");
 	if (!check_ending(tmp2 + 1))
 	{
 		big = ft_strndup(small, tmp2 + 1 - small);
@@ -125,7 +125,7 @@ int 	finish_reading(char **string, char *tmp2, char *small, char *big)
 		free_strings(small, tmp1, big, NULL);
 		return (0);
 	}
-	free_strings(small, tmp1, big, NULL);
+	free_strings(small, tmp1, NULL, NULL);
 	return (SYNTAX_ERROR);
 }
 
@@ -135,15 +135,15 @@ int		continue_reading(int fd, char **string)
 	char *big;
 	char *tmp1;
 	char *tmp2;
-
 	tmp1 = ft_strdup("\n");
 	big = NULL;
 	while(get_next_line(fd, &small) > 0)
 	{
 		if ((tmp2 = ft_strchr(small, '"')))
 			return (finish_reading(string, tmp2, small, big));
-		big = ft_strjoin(tmp1, small);
-		free_strings(tmp1, small, NULL, NULL);
+		tmp2 = ft_strjoin(tmp1, small);
+		big = ft_strjoin(tmp2, "\n");
+		free_strings(tmp1, tmp2, small, NULL);
 		tmp1 = big;
 		if (ft_strlen(big) > COMMENT_LENGTH)
 			break ;
