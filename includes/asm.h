@@ -35,6 +35,9 @@ typedef	struct		s_op
 	unsigned char	arg[3];
 	int 			arg_type_code;
 	int 			t_dir_size;
+	char			*name;
+	char			n;
+	char			carry;
 }					t_op;
 
 struct				s_label
@@ -54,8 +57,8 @@ typedef struct		s_args
 struct 				s_instruction
 {
 	int 			position;
-	int				function;// from 0 to 16
-	int				num_of_args;
+	t_op			function;// from 0 to 16
+    int			    num_of_args;
 	t_args			args_of_func[4];
 	t_instruction	*next;
 };

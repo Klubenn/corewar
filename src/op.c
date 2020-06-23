@@ -1,6 +1,6 @@
 
 #include <stdio.h>
-#include <libft.h>
+#include <../libft/libft.h>
 #include "../includes/op.h"
 #include "../includes/asm.h"
 
@@ -43,8 +43,8 @@ t_op *check_op(char *str)
 
 	while (!ft_isspace(str[i]) && str[i] != '\0')
 		instr_len++;
-	op = ft_strsub(str, 0, instr_len);// TODO обработать ошибки strsub
-
+	if (!op = ft_strsub(str, 0, instr_len))
+		return (NULL);
 	while (i < 16)
 	{
 		if (ft_strcmp(op, op_tab[i].func_num) == 0)
@@ -54,47 +54,62 @@ t_op *check_op(char *str)
 	return (NULL);
 }
 
-int skipper(int if_chars, char* str)
+void create_instruction(char *str, int instr_pointer, int parametr_pointer, t_struct *data)
 {
-    int i;
+	t_instruction tmp_data_inst;
+	
+	tmp_data_inst = data->instruction;
+	while (tmp_data_inst != NULL)
+		tmp_data_inst = tmp_data_inst->next;
+	tmp_data_inst = (t_instruction *)ft_memalloc(sizeof(t_instruction));
 
-    i = 0;
-    if (if_chars)
-    {
-        while (!ft_isspace(str[i]) && str[i] != '\0')
-			i++;
-    }
-	while (ft_isspace(str[i]))
-		i++;
-	return (i);
-}
-
-int check_param(char *str, t_op *op)
-{
-	char **params;
-	char *param;
-	int i;
-
-	params = ft_strsplit(str, SEPARATOR_CHAR);
-	if (!check_params_num(params, op->arg_num))
-		error_managment();
-	i = 0;
-	while (i < op->arg_num)
+	tmp_data_inst->function = check_op(str + instr_pointer);	
+	tmp_data_inst->args_of_func = create_args(str + parametr_pointer);
+	if (data->label_presence == 1)
 	{
-		param = ft_strtrim(params[i]);
-		if (!check_type(param))
-			error_managment();
-		i++;
+		data->label->instruction = tmp_data_inst;
+		data->label_present = 0;
 	}
 }
 
-int check_params_num(char **params, int needed_num)
+t_args *create_args(char *str)
 {
+	t_args *result;
+	char **each_arg;
 	int i;
 
+	result = (t_args *)ft_memalloc(sizeof(t_args) * 4);
+	each_arg = ft_strsplit(str, SEPARATOR_CHAR);
 	i = 0;
-	while (params[i])
+	while (each_arg[i])
+	{
+		result[i] = (t_args)ft_memalloc(sizeof(t_args));
+		result[i].type = get_type(each_arg[i]);
+		result[i]->str = each_arg[i];
 		i++;
-	return (i == needed_num) ? 1 : 0;
+	}
+	return (result);
 }
 
+char get_type(char *param)
+{
+	char *trim_param;
+
+	trim_param = param[skip_spaces(param)];
+	if (ft_isdigit(trim_param[0]))
+		return (T_IND);
+	if (trim_param[0] == 'r' || trim_param[0] == '-')
+		return (T_REG);
+
+	if (trim_param[0] == '%')
+	{
+		if (ft_isdigit(trim_param[1]) || trim_param[1] == '-')
+			return (T_DIR);
+
+		if (trim_param[1] == ':')
+			return (T_DIR | T_LAB);
+	}
+
+	if (trim_param[0] == ':')
+		return (T_IND | T_LAB);
+}

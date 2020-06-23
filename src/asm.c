@@ -11,7 +11,8 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include <libft.h>
+#include <unistd.h>
+#include "../libft/libft.h"
 #include "../includes/op.h"
 #include "../includes/asm.h"
 
@@ -50,24 +51,25 @@ void	error_management(int err, t_struct *data)
 	exit(1);
 }
 
-int	check_other_strings(int fd, char *str, t_struct *data)
+int	check_other_strings(char *str, t_struct *data)
 {
 	t_op *op;
 	int instr_pointer;
 	int parametr_pointer;
 	int if_label;
 
-	if ((if_label = check_label(data, str)) < 0)//pointer after label?
+	if ((if_label = check_label(data, str)) < 0)
 		return (MALLOC_FAIL);
-	//TODO не нужна отдельная функция для перескока, просто пишешь (str + if_label) и строка сдвинется
-	//TODO можно вызвать str = trim_start(str + if_label) чтобы обрезать пробелы после лейбла
-	instr_pointer = skipper(if_label, str);//skips spaces or skips label and spaces
-	if (!op = check_op(&str[instr_pointer]))
-		error_management();
-	parametr_pointer = skipper(1, &str[instr_pointer]);//skips instruction and spaces
-	if (!check_param(&str[parametr_pointer], op))
-		error_management();
-	create_instruction(str, instr_pointer, parametr_pointer, data);
+		
+	instr_pointer = skip_spaces(str + if_label);
+	if (!op = check_op(str + instr_pointer))
+		return (SYNTAX_ERROR);
+
+	parametr_pointer = skip_spaces(str + skip_words(str + instr_pointer));
+	if (!check_param(str + parametr_pointer, op))
+		return (SYNTAX_ERROR);
+
+	create_instruction(str, if_label, instr_pointer, parametr_pointer, data);	
 }
 
 void	free_strings(char *str1, char *str2, char *str3, char *str4)
