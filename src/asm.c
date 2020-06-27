@@ -37,6 +37,28 @@ void	print_error_message(enum err_message num)
 	ft_putstr_fd(ch[num], 2);
 }
 
+char 		*trim_start(char *str)
+{
+	if (str)
+	{
+		while(*str == ' ' || *str == '\t')
+			str++;
+	}
+	return (str);
+}
+
+int		check_ending(char *str)
+{
+	if (str)
+	{
+		while (*str == ' ' || *str == '\t')
+			str++;
+		if (!*str || *str == COMMENT_CHAR)
+			return (0);
+	}
+	return (1);
+}
+
 void	free_data(t_struct *data)
 {
 	free(data);//TODO write more later
@@ -51,25 +73,30 @@ void	error_management(int err, t_struct *data)
 	exit(1);
 }
 
+char *remove_comment_from_string(char *str)
+{
+	char *tmp;
+
+	if (!(tmp = ft_strchr(str, COMMENT_CHAR)))
+		return (ft_strdup(str));
+	return (ft_strndup(str, tmp - str));
+}
+
 int	check_other_strings(char *str, t_struct *data)
 {
 	t_op *op;
-	int instr_pointer;
-	int parametr_pointer;
 	int if_label;
+	char *str2;
 
 	if ((if_label = check_label(data, str)) < 0)
 		return (MALLOC_FAIL);
-		
-	instr_pointer = skip_spaces(str + if_label);
-	if (!op = check_op(str + instr_pointer))
+	str = trim_start(str + if_label);
+	if (!(op = check_op(str)))
 		return (SYNTAX_ERROR);
-
-	parametr_pointer = skip_spaces(str + skip_words(str + instr_pointer));
-	if (!check_param(str + parametr_pointer, op))
-		return (SYNTAX_ERROR);
-
-	create_instruction(str, if_label, instr_pointer, parametr_pointer, data);	
+	str = trim_start(str + skip_word(str));
+	if (!(str2 = remove_comment_from_string(str)))
+		return (MALLOC_FAIL);
+	return (check_param(data, str2, op));
 }
 
 void	free_strings(char *str1, char *str2, char *str3, char *str4)
@@ -78,18 +105,6 @@ void	free_strings(char *str1, char *str2, char *str3, char *str4)
 	free(str2);
 	free(str3);
 	free(str4);
-}
-
-int		check_ending(char *str)//TODO эту ф-цию можно использовать и дальше для проверки инструкций
-{
-	if (str)
-	{
-		while (*str == ' ' || *str == '\t')
-			str++;
-		if (!*str || *str == COMMENT_CHAR)
-			return (0);
-	}
-	return (1);
 }
 
 int 	finish_reading(char **string, char *tmp2, char *small, char *big)
@@ -134,7 +149,7 @@ int		continue_reading(int fd, char **string)
 	return(QUOTES_END);
 }
 
-int 	write_name_comment(char *substring, t_struct *data, int len)
+int 	write_name_comment(char *substring, t_struct *data, size_t len)
 {
 	if (len == PROG_NAME_LENGTH)
 	{
@@ -202,16 +217,6 @@ void	process_name_and_comment(char *str, t_struct *data, int fd)
 		error_management(err, data);
 }
 
-char 		*trim_start(char *str)
-{
-	if (str)
-	{
-		while(*str == ' ' || *str == '\t')
-			str++;
-	}
-	return (str);
-}
-
 void		process_string(char *str, t_struct *data, int fd)
 {
 	int		error;
@@ -223,7 +228,7 @@ void		process_string(char *str, t_struct *data, int fd)
 	if (*str_trim == '.')
 		error = DOT_START;
 	else
-		error = check_other_strings(fd, str_trim, data);
+		error = check_other_strings(str_trim, data);
 	if (error)
 	{
 		free(str);
@@ -232,7 +237,7 @@ void		process_string(char *str, t_struct *data, int fd)
 	}
 }
 
-t_struct	*is_valid_file(char *file_name)
+t_struct	*is_valid_file(char *file_name, char *new_file)
 {
 	int			fd;
 	int 		flag;
@@ -240,18 +245,18 @@ t_struct	*is_valid_file(char *file_name)
 	t_struct	*data;
 
 	flag = 1;
-	if ((fd = open(file_name, O_RDONLY)) == -1)
+	if ((fd = open(file_name, O_RDONLY)) == -1 || !(data = (t_struct *)ft_memalloc(sizeof(t_struct))))
+	{
+		free(new_file);
 		error_management(NO_FILE, NULL);
-	if (!(data = (t_struct *)ft_memalloc(sizeof(t_struct))))
-		error_management(MALLOC_FAIL, NULL);
+	}
+	data->file_name = new_file;
 	while (get_next_line(fd, &str) > 0)
 	{
 		if (!data->name || !data->comment)
 			process_name_and_comment(str, data, fd);
 		else
 			process_string(str, data, fd);
-//		if (data->name && data->comment)
-//			printf("%s | %s\n", data->name, data->comment);
 		flag = check_ending(str);
 		free(str);
 	}
@@ -299,14 +304,14 @@ int		main(int ac, char **av)
 		error_management(USAGE, NULL);
 	while (i < ac)
 	{
-		if (!(new_file = change_extension(av[i])))
+		if (!(new_file = change_extension(av[i])))//записать название файла в структуру
 			error_management(FILE_NAME, NULL);
 		else
 		{
-			data = is_valid_file(av[i]);
+			data = is_valid_file(av[i], new_file);
 			instructions_position(data);
 			check_labels(data);
-			to_bytecode(new_file, data);
+			to_bytecode(data);
 			printf("file %s was successfully created\n", new_file);//TODO change to ft_printf
 			free_data(data);
 		}
