@@ -26,17 +26,11 @@ enum err_message
 	QUOTES_BEGIN,
 	QUOTES_END,
 	SYNTAX_ERROR,
+	WRONG_REG,
+	WRONG_NUM,
+	DUPL_LABEL,
 };
 
-typedef	struct		s_op
-{
-    char			*name;
-	int 			func_num;
-	int 			arg_num;
-	unsigned char	arg[3];
-	int 			arg_type_code;
-	int 			t_dir_size;
-}					t_op;
 
 struct				s_label
 {

@@ -4,13 +4,12 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/Users/student/corewar/other/print_file.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/other/print_file.c.o"
-  "/Users/student/corewar/other/sample_t_struct.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/other/sample_t_struct.c.o"
-  "/Users/student/corewar/src/asm.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/src/asm.c.o"
-  "/Users/student/corewar/src/champ_exec_code.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/src/champ_exec_code.c.o"
-  "/Users/student/corewar/src/labels.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/src/labels.c.o"
-  "/Users/student/corewar/src/op.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/src/op.c.o"
-  "/Users/student/corewar/src/to_bytecode.c" "/Users/student/corewar/cmake-build-debug/CMakeFiles/corewar.dir/src/to_bytecode.c.o"
+  "/Users/gtristan/CLionProjects/corewar/src/asm.c" "/Users/gtristan/CLionProjects/corewar/cmake-build-debug/CMakeFiles/corewar.dir/src/asm.c.o"
+  "/Users/gtristan/CLionProjects/corewar/src/champ_exec_code.c" "/Users/gtristan/CLionProjects/corewar/cmake-build-debug/CMakeFiles/corewar.dir/src/champ_exec_code.c.o"
+  "/Users/gtristan/CLionProjects/corewar/src/checks.c" "/Users/gtristan/CLionProjects/corewar/cmake-build-debug/CMakeFiles/corewar.dir/src/checks.c.o"
+  "/Users/gtristan/CLionProjects/corewar/src/labels.c" "/Users/gtristan/CLionProjects/corewar/cmake-build-debug/CMakeFiles/corewar.dir/src/labels.c.o"
+  "/Users/gtristan/CLionProjects/corewar/src/op.c" "/Users/gtristan/CLionProjects/corewar/cmake-build-debug/CMakeFiles/corewar.dir/src/op.c.o"
+  "/Users/gtristan/CLionProjects/corewar/src/to_bytecode.c" "/Users/gtristan/CLionProjects/corewar/cmake-build-debug/CMakeFiles/corewar.dir/src/to_bytecode.c.o"
   )
 set(CMAKE_C_COMPILER_ID "AppleClang")
 

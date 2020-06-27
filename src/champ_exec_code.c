@@ -86,8 +86,8 @@ void	f_reg(int fd, t_struct *data, t_instruction *instruction, t_args *argument)
 	reg_num = (unsigned char)ft_atoi((argument->str) + 1);
 	if (reg_num > 0  && reg_num <= 16)
 		write(fd, &reg_num, 1);
-	else
-		exit (1);//invoke error function
+	else if (instruction)
+		error_management(WRONG_REG, data);
 }
 
 void	f_dir(int fd, t_struct *data, t_instruction *instruction, t_args *argument)
@@ -98,13 +98,13 @@ void	f_dir(int fd, t_struct *data, t_instruction *instruction, t_args *argument)
 	if (argument->str[1] == ':')
 	{
 		dir_num += bin_find_label(data, argument->str + 2);
-		write_backwards(fd, &dir_num, argument->size);//check if it should be written backwards or not
+		write_backwards(fd, &dir_num, argument->size);
 	}
 	else
 	{
-		if (corewar_atoi(argument->str + 1, &dir_num, argument->size))//rewrite atoi to check
-			exit(1);//invoke error function
-		write_backwards(fd, &dir_num, argument->size);//check if it should be written backwards or not
+		if (corewar_atoi(argument->str + 1, &dir_num, argument->size))
+			error_management(WRONG_NUM, data);
+		write_backwards(fd, &dir_num, argument->size);
 	}
 }
 
@@ -116,13 +116,13 @@ void	f_ind(int fd,t_struct *data, t_instruction *instruction, t_args *argument)
 	if (argument->str[0] == ':')
 	{
 		ind_num += (short)bin_find_label(data, argument->str + 1);
-		write_backwards(fd, &ind_num, sizeof(short));//check if it should be written backwards or not
+		write_backwards(fd, &ind_num, sizeof(short));
 	}
 	else
 	{
-		if (corewar_atoi(argument->str, &ind_num, IND_SIZE))//rewrite atoi to check
-			exit(1);//invoke error function
-		write_backwards(fd, &ind_num, sizeof(short));//check if it should be written backwards or not
+		if (corewar_atoi(argument->str, &ind_num, IND_SIZE))
+			error_management(WRONG_NUM, data);
+		write_backwards(fd, &ind_num, sizeof(short));
 	}
 }
 
@@ -142,17 +142,12 @@ void arguments_code(int fd, t_struct *data, t_instruction *instruction)
 void	bin_exec_champ(int fd, t_struct *data)
 {
 	t_instruction *instruction;
-	int i = 1;//remove
 
 	instruction = data->instruction;
 	while (instruction)
 	{
-		printf("%4d - instruction %d\n", i, instruction->function);//remove
 		operation_code(fd, instruction);
 		arguments_code(fd, data, instruction);
 		instruction = instruction->next;
-//		if (i == 1)
-//			break;
-		i++;//remove
 	}
 }

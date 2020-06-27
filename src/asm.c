@@ -33,6 +33,9 @@ void	print_error_message(enum err_message num)
 			"Name and comment should start with the quotes.\n",					//QUOTES_BEGIN
 			"Name and comment should end with the quotes.\n",					//QUOTES_END
 			"Syntax error.\n",													//SYNTAX_ERROR
+			"Wrong register number.\n",											//WRONG_REG
+			"Wrong number.\n",													//WRONG_NUM
+			"Error: duplicate labels.\n",										//DUPL_LABEL
 	};
 	ft_putstr_fd(ch[num], 2);
 }
@@ -117,7 +120,7 @@ int 	finish_reading(char **string, char *tmp2, char *small, char *big)
 		tmp1 = ft_strdup("\n");
 	if (!check_ending(tmp2 + 1))
 	{
-		big = ft_strndup(small, tmp2 + 1 - small);
+		big = ft_strndup(small, tmp2 - small);
 		*string = ft_strjoin(tmp1, big);
 		free_strings(small, tmp1, big, NULL);
 		return (0);
@@ -189,11 +192,11 @@ int		extract_name_comment(char *str, t_struct *data, int fd, int len)
 	{
 		if ((i = continue_reading(fd, &add_string)))
 			return (i);
-		substring = ft_strjoin(str, add_string);
+		substring = ft_strjoin(str + 1, add_string);
 		free(add_string);
 	}
 	else if (!check_ending(str + i + 1))
-		substring = ft_strndup(str, i + 1);
+		substring = ft_strndup(str + 1, i - 1);
 	else
 		return (SYNTAX_ERROR);
 	return (write_name_comment(substring, data, len));
@@ -203,8 +206,7 @@ void	process_name_and_comment(char *str, t_struct *data, int fd)
 {
 	int err;
 
-	while (*str == ' ' || *str == '\t')
-		str++;
+	str = trim_start(str);
 	if (*str == COMMENT_CHAR || !*str)
 		return ;
 	if (ft_strnequ(str, NAME_CMD_STRING, 5))

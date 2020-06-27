@@ -1,8 +1,7 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/corewar.dir/other/print_file.c.o"
-  "CMakeFiles/corewar.dir/other/sample_t_struct.c.o"
   "CMakeFiles/corewar.dir/src/asm.c.o"
   "CMakeFiles/corewar.dir/src/champ_exec_code.c.o"
+  "CMakeFiles/corewar.dir/src/checks.c.o"
   "CMakeFiles/corewar.dir/src/labels.c.o"
   "CMakeFiles/corewar.dir/src/op.c.o"
   "CMakeFiles/corewar.dir/src/to_bytecode.c.o"
