@@ -29,23 +29,29 @@ void	print_error_message(enum err_message num)
 			"Memory allocation failed.\n",										//MALLOC_FAIL
 			"Champion name is too long.\n",										//LONG_NAME
 			"Champion comment is too long.\n",									//LONG_COMM
-			"Champion name must be before comment.\n",							//COMM_BEFORE_NAME
 			"Name and comment should start with the quotes.\n",					//QUOTES_BEGIN
 			"Name and comment should end with the quotes.\n",					//QUOTES_END
 			"Syntax error.\n",													//SYNTAX_ERROR
 			"Wrong register number.\n",											//WRONG_REG
 			"Wrong number.\n",													//WRONG_NUM
 			"Error: duplicate labels.\n",										//DUPL_LABEL
+			"File doesn't exist.\n",											//NOT_EXIST
+			"Multiple champion names.\n",										//MULTIPLE_NAME
+			"Multiple champion comments.\n",									//MULTIPLE_COMMENT
+
 	};
 	ft_putstr_fd(ch[num], 2);
 }
 
-char 		*trim_start(char *str)
+char 		*trim_start(char *str, t_struct *data)
 {
 	if (str)
 	{
 		while(*str == ' ' || *str == '\t')
+		{
 			str++;
+			data->position += 1;
+		}
 	}
 	return (str);
 }
@@ -70,7 +76,24 @@ void	free_data(t_struct *data)
 void	error_management(int err, t_struct *data)
 {
 	if (err)
+	{
+		if (data)
+		{
+			ft_putstr_fd("Error on line ", 2);
+			ft_putnbr_fd(data->line, 2);
+			ft_putstr_fd(", position ", 2);
+			ft_putnbr_fd(data->position, 2);
+			ft_putstr_fd(": ", 2);
+		}
 		print_error_message(err);
+		if (data)
+		{
+			ft_putendl_fd(data->str, 2);
+			while ((data->position)--)
+				ft_putchar_fd(' ', 2);
+			ft_putendl_fd("^", 2);
+		}
+	}
 	if (data)
 		free_data(data);
 	exit(1);
@@ -85,21 +108,43 @@ char *remove_comment_from_string(char *str)
 	return (ft_strndup(str, tmp - str));
 }
 
+char *cut_string(char *str)
+{
+	int i;
+	char *new;
+
+	i = 0;
+	while (*str == ' ' || *str == '\t')
+		str++;
+	while (str[i] && str[i] != COMMENT_CHAR)
+		i++;
+	if (!(new = ft_strndup(str, i)))
+		return (NULL);
+	return (new);
+}
+
 int	check_other_strings(char *str, t_struct *data)
 {
 	t_op *op;
 	int if_label;
-	char *str2;
+	char *cut_str;
+	int result;
 
 	if ((if_label = check_label(data, str)) < 0)
 		return (MALLOC_FAIL);
-	str = trim_start(str + if_label);
-	if (!(op = check_op(str)))
-		return (SYNTAX_ERROR);
-	str = trim_start(str + skip_word(str));
-	if (!(str2 = remove_comment_from_string(str)))
+	if (!check_ending(str + if_label))
+		return (0);
+	if (!(cut_str = cut_string(str + if_label)))
 		return (MALLOC_FAIL);
-	return (check_param(data, str2, op));
+	if (!(op = check_op(cut_str)))
+	{
+		free(cut_str);
+		return (SYNTAX_ERROR);
+	}
+	str = trim_start(cut_str + ft_strlen(op->name), data);
+	result = check_param(data, str, op);
+	free(cut_str);
+	return (result);
 }
 
 void	free_strings(char *str1, char *str2, char *str3, char *str4)
@@ -129,7 +174,7 @@ int 	finish_reading(char **string, char *tmp2, char *small, char *big)
 	return (SYNTAX_ERROR);
 }
 
-int		continue_reading(int fd, char **string)
+int		continue_reading(int fd, char **string, t_struct *data)
 {
 	char *small;
 	char *big;
@@ -137,14 +182,17 @@ int		continue_reading(int fd, char **string)
 	char *tmp2;
 	tmp1 = ft_strdup("\n");
 	big = NULL;
-	while(get_next_line(fd, &small) > 0)
+	while(get_next_line(fd, &small) > 0 && ++(data->line))
 	{
+		data->str = small;
+		data->position = 0;
 		if ((tmp2 = ft_strchr(small, '"')))
 			return (finish_reading(string, tmp2, small, big));
 		tmp2 = ft_strjoin(tmp1, small);
 		big = ft_strjoin(tmp2, "\n");
 		free_strings(tmp1, tmp2, small, NULL);
 		tmp1 = big;
+		data->str = NULL;
 		if (ft_strlen(big) > COMMENT_LENGTH)
 			break ;
 	}
@@ -181,8 +229,7 @@ int		extract_name_comment(char *str, t_struct *data, int fd, int len)
 	char *add_string;
 	int i;
 
-	while (*str == ' ' || *str == '\t')
-		str++;
+	str = trim_start(str, data);
 	if (!*str || *str != '"')
 		return(QUOTES_BEGIN);
 	i = 1;
@@ -190,7 +237,7 @@ int		extract_name_comment(char *str, t_struct *data, int fd, int len)
 		i++;
 	if (!str[i])
 	{
-		if ((i = continue_reading(fd, &add_string)))
+		if ((i = continue_reading(fd, &add_string, data)))
 			return (i);
 		substring = ft_strjoin(str + 1, add_string);
 		free(add_string);
@@ -206,13 +253,13 @@ void	process_name_and_comment(char *str, t_struct *data, int fd)
 {
 	int err;
 
-	str = trim_start(str);
+	str = trim_start(str, data);
 	if (*str == COMMENT_CHAR || !*str)
 		return ;
 	if (ft_strnequ(str, NAME_CMD_STRING, 5))
-		err = extract_name_comment(str + 5, data, fd, PROG_NAME_LENGTH);
+		err = (data->name ? MULTIPLE_NAME : extract_name_comment(str + 5, data, fd, PROG_NAME_LENGTH));
 	else if (ft_strnequ(str, COMMENT_CMD_STRING, 8))
-		err = (data->name ? extract_name_comment(str + 8, data, fd, COMMENT_LENGTH) : COMM_BEFORE_NAME);
+		err = (data->comment ? MULTIPLE_COMMENT : extract_name_comment(str + 8, data, fd, COMMENT_LENGTH));
 	else
 		err = (TOP_FILE);
 	if (err)
@@ -224,11 +271,18 @@ void		process_string(char *str, t_struct *data, int fd)
 	int		error;
 	char	*str_trim;
 
-	str_trim = trim_start(str);
+	str_trim = trim_start(str, data);
 	if (!*str_trim || *str_trim == COMMENT_CHAR)
 		return ;
 	if (*str_trim == '.')
-		error = DOT_START;
+	{
+		if (ft_strnequ(str, NAME_CMD_STRING, 5))
+			error = MULTIPLE_NAME;
+		else if (ft_strnequ(str, COMMENT_CMD_STRING, 8))
+			error = MULTIPLE_COMMENT;
+		else
+			error = DOT_START;
+	}
 	else
 		error = check_other_strings(str_trim, data);
 	if (error)
@@ -239,55 +293,54 @@ void		process_string(char *str, t_struct *data, int fd)
 	}
 }
 
-t_struct	*is_valid_file(char *file_name, char *new_file)
+void	*is_valid_file(char *file_name, t_struct *data)
 {
 	int			fd;
 	int 		flag;
 	char		*str;
-	t_struct	*data;
 
 	flag = 1;
-	if ((fd = open(file_name, O_RDONLY)) == -1 || !(data = (t_struct *)ft_memalloc(sizeof(t_struct))))
+	if ((fd = open(file_name, O_RDONLY)) == -1)
+		error_management(NO_FILE, data);
+	while (get_next_line(fd, &str) > 0 && ++(data->line))
 	{
-		free(new_file);
-		error_management(NO_FILE, NULL);
-	}
-	data->file_name = new_file;
-	while (get_next_line(fd, &str) > 0)
-	{
+		data->str = str;
+		data->position = 0;
 		if (!data->name || !data->comment)
 			process_name_and_comment(str, data, fd);
 		else
 			process_string(str, data, fd);
 		flag = check_ending(str);
 		free(str);
+		data->str = NULL;
 	}
 	close(fd);
 	if (flag)
 		error_management(END_INPUT, data);
-	return (data);
 }
 
-char *change_extension(char *file_name)
+t_struct *change_extension(char *file_name)
 {
 	int i;
-	char	*new_file;
+	t_struct *data;
 
 	if (!file_name)
-		return (NULL);
+		error_management(NOT_EXIST, NULL);
 	i = ft_strlen(file_name);
 	while (i >= 0)
 	{
 		if (file_name[i] == '.')
 		{
 			if (i == 0 || ft_strcmp(file_name + i, ".s"))
-				return (NULL);
+				error_management(FILE_NAME, NULL);
 			else
 			{
-				new_file = (char *)ft_memalloc((i + 5) * (sizeof(char)));
-				ft_strncpy(new_file, file_name, i);
-				ft_strncpy(&(new_file[i]), ".cor", 4);
-				return (new_file);
+				if (!(data = (t_struct *)ft_memalloc(sizeof(t_struct))) ||
+				!(data->file_name = (char *)ft_memalloc((i + 5) * (sizeof(char)))))
+					error_management(MALLOC_FAIL, data);
+				ft_strncpy(data->file_name, file_name, i);
+				ft_strncpy(data->file_name + i, ".cor", 4);
+				return (data);
 			}
 		}
 		i--;
@@ -299,22 +352,25 @@ int		main(int ac, char **av)
 {
 	int			i;
 	t_struct	*data;
-	char		*new_file;
 
 	i = 1;
 	if (ac < 2)
 		error_management(USAGE, NULL);
 	while (i < ac)
 	{
-		if (!(new_file = change_extension(av[i])))//записать название файла в структуру
+		if (!(data = change_extension(av[i])))
 			error_management(FILE_NAME, NULL);
 		else
 		{
-			data = is_valid_file(av[i], new_file);
+			is_valid_file(av[i], data);
 			instructions_position(data);
 			check_labels(data);
 			to_bytecode(data);
-			printf("file %s was successfully created\n", new_file);//TODO change to ft_printf
+
+			ft_putstr("file ");
+			ft_putstr(data->file_name);
+			ft_putendl(" was successfully created");//как альтернатива
+
 			free_data(data);
 		}
 		i++;

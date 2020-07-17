@@ -155,6 +155,7 @@ corewar: CMakeFiles/corewar.dir/src/op.c.o
 corewar: CMakeFiles/corewar.dir/src/champ_exec_code.c.o
 corewar: CMakeFiles/corewar.dir/build.make
 corewar: ../libft/libft.a
+corewar: ../libft/ft_printf/libftprintf.a
 corewar: CMakeFiles/corewar.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/gtristan/CLionProjects/corewar/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking C executable corewar"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/corewar.dir/link.txt --verbose=$(VERBOSE)

@@ -11,6 +11,8 @@ void	argument_type(int fd, t_instruction *instruction)
 	while (i < instruction->num_of_args)
 	{
 		arg_num[i] = instruction->args_of_func[i]->type;
+		if (arg_num[i] & T_LAB)
+			arg_num[i] -= T_LAB;
 		arg_num[i] = arg_num[i] << ((4 - (i+1)) * 2);
 		arg_type = arg_type | arg_num[i];
 		i++;
@@ -59,8 +61,6 @@ int		corewar_atoi(char *arg, void *numptr, int size)
 		sign = -1;
 		arg++;
 	}
-	else if (*arg == '+')
-		arg++;
 	while(*arg >= '0' && *arg <= '9' && digits <= 10)
 	{
 		result = result * 10 + (*arg - '0');
@@ -70,7 +70,7 @@ int		corewar_atoi(char *arg, void *numptr, int size)
 	result *= sign;
 	if (*arg || digits > 10 || (size == 2 && (result > SHRT_MAX || result < SHRT_MIN))
 		|| (size == 4 && (result > INT_MAX || result < INT_MIN)) || (size == 1 &&
-		(result < 1 || result > 16)))
+		(result < 1 || result > REG_NUMBER)))
 		return (1);
 	num = numptr;
 	*num = size == 1 ? (char)result : *num;
@@ -95,7 +95,7 @@ void	f_dir(int fd, t_struct *data, t_instruction *instruction, t_args *argument)
 	int		dir_num;
 
 	dir_num = (int)(-1 * instruction->position);
-	if (argument->str[1] == ':')
+	if (argument->type & T_LAB)
 	{
 		dir_num += bin_find_label(data, argument->str + 2);
 		write_backwards(fd, &dir_num, argument->size);
@@ -113,7 +113,7 @@ void	f_ind(int fd,t_struct *data, t_instruction *instruction, t_args *argument)
 	short	ind_num;
 
 	ind_num = (short)(-1 * instruction->position);
-	if (argument->str[0] == ':')
+	if (argument->type & T_LAB)
 	{
 		ind_num += (short)bin_find_label(data, argument->str + 1);
 		write_backwards(fd, &ind_num, sizeof(short));
